@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">mingle</string>
-    <string name="login">login</string>
+    <string name="sign_in">sign in</string>
     <string name="senha">senha</string>
     <string name="usu_rio">usuário</string>
     <string name="mingle">mingle</string>
-    <string name="registrar">registrar</string>
+    <string name="sign_up">sign up</string>
     <string name="mostrar_senha">mostrar a senha</string>
     <string name="main_color">mostrar a senha</string>
     <string name="charts">charts</string>
@@ -13,4 +13,8 @@
     <string name="title_activity_mingle_detail_host">mingleDetailHostActivity</string>
     <string name="title_mingle_list">mingles</string>
     <string name="title_mingle_detail">mingle Detail</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="nome_nome">Nome Nome</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="r_0_00">R$ 0,00</string>
 </resources>

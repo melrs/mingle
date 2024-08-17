@@ -1,15 +1,28 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Mingle" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.Mingle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary branding color. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/dark_primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <!-- Secondary branding color. -->
         <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/darker_primary</item>
-        <item name="colorOnPrimary">@color/complementary</item>
-        <item name="colorOnSecondary">@color/light_primary</item>
-        <item name="colorBackground">@color/background</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <!-- Background color. -->
+        <item name="android:colorBackground">@color/background</item>
+        <!-- Error color. -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOutline">@color/outline</item>>
+        <item name="android:textAppearance">@style/BaseTextAppearance</item>
     </style>
 
-    <style name="Theme.Mingle" parent="Base.Theme.Mingle" />
+    <!-- Base text appearance -->
+    <style name="BaseTextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/primary_variant</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/aoboshi_one</item>
+        <item name="android:typeface">sans</item>
+    </style>
 </resources>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.bottomnavigation.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/light_primary"
+    android:background="@color/on_primary"
     app:itemIconSize="26dp"
-    app:itemRippleColor="@color/complementary"
-    app:itemTextColor="@color/dark_primary"
-    app:itemIconTint="@color/dark_primary"
+    app:itemRippleColor="@color/tertiary"
+    app:itemTextColor="@color/primary_variant"
+    app:itemIconTint="@color/primary_variant"
     app:menu="@menu/bottom_nav_menu" />

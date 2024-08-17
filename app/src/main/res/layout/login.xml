@@ -31,7 +31,8 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView">
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEditText"
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/aoboshi_one"
             android:hint="@string/usu_rio"
-            android:textColor="@color/darker_primary"
+            android:textColor="@color/primary_variant"
             android:typeface="sans" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,8 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/usernameLayout"
-        app:hintTextColor="@color/darker_primary"
-        app:boxStrokeColor="@color/darker_primary">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
@@ -61,7 +61,7 @@
             android:fontFamily="@font/aoboshi_one"
             android:hint="@string/senha"
             android:inputType="textPassword"
-            android:textColor="@color/darker_primary"
+            android:textColor="@color/primary_variant"
             android:typeface="sans" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,36 +72,36 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/aoboshi_one"
         android:text="@string/mostrar_senha"
-        android:textColor="@color/darker_primary"
+        android:textColor="@color/primary_variant"
         android:typeface="sans"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/signInButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:backgroundTint="@color/primary"
-        android:text="@string/login"
-        android:textColor="@color/light_primary"
+        android:text="@string/sign_in"
+        android:textColor="@color/on_primary"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/showPasswordCheckBox"
-        app:strokeColor="@color/dark_primary" />
+        app:strokeColor="@color/primary_variant" />
 
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/signUpButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/registrar"
-        android:backgroundTint="@color/dark_primary"
-        android:textColor="@color/light_primary"
+        android:text="@string/sign_up"
+        android:backgroundTint="@color/primary_variant"
+        android:textColor="@color/on_primary"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@id/signInButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
