@@ -197,8 +197,8 @@ public class mingleListFragment extends Fragment {
 
             ViewHolder(MingleListContentBinding binding) {
                 super(binding.getRoot());
-                mIdView = binding.idText;
-                mContentView = binding.content;
+                mIdView = binding.userName;
+                mContentView = binding.userSurname;
             }
 
         }

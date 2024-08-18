@@ -17,7 +17,7 @@
         android:id="@+id/mingle_detail_fragment"
         android:name="com.melrs.mingle.mingleDetailFragment"
         android:label="mingle_detail"
-        tools:layout="@layout/friend_detail">
+        tools:layout="@layout/fragment_mingle_detail">
         <argument
             android:name="item_id"
             android:defaultValue=""

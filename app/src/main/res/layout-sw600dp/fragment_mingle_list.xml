@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         tools:context="com.melrs.mingle.mingleDetailHostActivity"
-        tools:listitem="@layout/user_in_list" />
+        tools:listitem="@layout/mingle_list_content" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

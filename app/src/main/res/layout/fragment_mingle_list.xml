@@ -16,5 +16,5 @@
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.melrs.mingle.mingleDetailHostActivity"
-        tools:listitem="@layout/user_in_list" />
+        tools:listitem="@layout/mingle_list_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
