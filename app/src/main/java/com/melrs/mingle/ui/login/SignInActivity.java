@@ -1,6 +1,8 @@
 package  com.melrs.mingle.ui.login;
 
 import android.app.Activity;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
@@ -19,43 +21,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melrs.mingle.R;
-import com.melrs.mingle.ui.login.LoginViewModel;
-import com.melrs.mingle.ui.login.LoginViewModelFactory;
 import com.melrs.mingle.databinding.ActivitySignInBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-    private ActivitySignInBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-     binding = ActivitySignInBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
+        com.melrs.mingle.databinding.ActivitySignInBinding binding = ActivitySignInBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        loginViewModel = getLoginViewModel();
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
+        final EditText usernameEditText = (EditText) binding.username;
+        final EditText passwordEditText =  (EditText) binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
+        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+            if (loginFormState == null) {
+                return;
+            }
+            loginButton.setEnabled(loginFormState.isDataValid());
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
         });
 
@@ -118,6 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+    }
+
+    private @NonNull LoginViewModel getLoginViewModel() {
+        return new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
