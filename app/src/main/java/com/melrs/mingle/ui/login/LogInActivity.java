@@ -4,6 +4,8 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
@@ -17,10 +19,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.databinding.ActivitySignInBinding;
 
-public class SignInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private EditText usernameEditText;
@@ -96,7 +99,6 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            loadingProgressBar.setVisibility(View.VISIBLE);
             doSignIn();
         });
     }
@@ -137,8 +139,9 @@ public class SignInActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -32,6 +34,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packaging {
+        resources {
+            excludes += "javamoney.properties"
+        }
+    }
 }
 
 dependencies {
@@ -49,4 +57,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.sdp.android)
+    implementation(libs.ssp.android)
+    implementation(libs.moneta)
 }
