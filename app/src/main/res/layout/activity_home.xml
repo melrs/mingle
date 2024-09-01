@@ -16,9 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/_16sdp"
         android:paddingStart="@dimen/_12sdp"
-        android:paddingEnd="@dimen/_12sdp"
-
-        >
+        android:paddingEnd="@dimen/_12sdp">
 
         <TextView
             android:id="@+id/helloTextView"
@@ -38,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/helloTextView"
-            android:fontFamily="@font/roboto"
+            android:fontFamily="@font/roboto_thin"
             android:text="@string/jane_doe"
             android:textColor="@color/black"
             android:textSize="@dimen/_23sdp" />
@@ -65,7 +63,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userNameView"
             android:layout_marginTop="17dp"
@@ -87,25 +85,27 @@
                 android:typeface="monospace" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/userBalance"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/roboto_condensed_regular"
                     android:text="@string/_100"
-                    android:shrinkColumns="0"
-                    android:stretchColumns="0"
-                    android:gravity="center"
                     android:textAlignment="center"
-                    android:autoSizeTextType="uniform"
+                    android:gravity="center"
+                    android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_45sdp" />
+                    android:textSize="@dimen/_73sdp"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="@dimen/_34sdp"
+                    app:autoSizeMaxTextSize="@dimen/_73sdp"
+                    app:autoSizeStepGranularity="@dimen/_1sdp"  />
 
                 <LinearLayout
                     android:id="@+id/balanceLayout"
@@ -118,16 +118,16 @@
                         android:id="@+id/rs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="@string/rs"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_18sdp" />
+                        android:textSize="@dimen/_14sdp" />
 
                     <TextView
                         android:id="@+id/cents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/roboto_thin"
                         android:text="@string/_00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_23sdp" />
