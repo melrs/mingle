@@ -94,36 +94,44 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/rs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/rs"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_23sdp" />
-
-                <TextView
                     android:id="@+id/userBalance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
                     android:fontFamily="@font/roboto_condensed_regular"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
                     android:text="@string/_100"
                     android:shrinkColumns="0"
                     android:stretchColumns="0"
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:autoSizeTextType="uniform"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_45sdp" />
 
-                <TextView
-                    android:id="@+id/cents"
+                <LinearLayout
+                    android:id="@+id/balanceLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/_00"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_23sdp" />
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/rs"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_18sdp" />
+
+                    <TextView
+                        android:id="@+id/cents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/_00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_23sdp" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
