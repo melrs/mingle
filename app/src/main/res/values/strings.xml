@@ -18,6 +18,7 @@
     <string name="sobrenome">Sobrenome</string>
     <string name="r_0_00">R$ 0,00</string>
     <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="prompt_email">email</string>
     <string name="prompt_password">password</string>
     <string name="action_sign_in">sign in</string>
@@ -25,7 +26,9 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">not a valid username</string>
     <string name="invalid_password">password must be >5 characters</string>
-    <string name="login_failed">"login failed"</string>
+    <string name="passwords_not_match">passwords do not match</string>
+    <string name="signin_failed">"sign in failed"</string>
+    <string name="signup_failed">"sign in failed"</string>
     <string name="mingle_logo">mingle logo</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -80,4 +83,6 @@
     <string name="mingle_status">pago</string>
     <string name="your_mingles">your mingles:</string>
     <string name="title_activity_create_account">CreateAccountActivity</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="username">username</string>
 </resources>

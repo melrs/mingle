@@ -1,0 +1,135 @@
+package com.melrs.mingle.ui.auth;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextWatcher;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.melrs.mingle.HomeActivity;
+import com.melrs.mingle.R;
+import com.melrs.mingle.databinding.ActivitySignUpBinding;
+
+public class SignUpActivity extends AppCompatActivity {
+
+    private AuthenticationViewModel authenticationViewModel;
+    private EditText usernameEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
+    private Button signUpButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivitySignUpBinding binding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        authenticationViewModel = getAuthenticationViewModel();
+        bindUIComponents(binding);
+        validateUserInput();
+        handleSignUpResult();
+        setupListeners();
+    }
+
+    private @NonNull AuthenticationViewModel getAuthenticationViewModel() {
+        return new ViewModelProvider(this, new AuthenticationViewModelFactory())
+                .get(AuthenticationViewModel.class);
+    }
+
+    private void bindUIComponents(ActivitySignUpBinding binding) {
+        usernameEditText = binding.username;
+        emailEditText = binding.emailAddress;
+        passwordEditText = binding.password;
+        confirmPasswordEditText = binding.confirmPassword;
+        signUpButton = binding.signUp;
+    }
+
+    private void validateUserInput() {
+        AuthenticationFormValidator.getInstance().getAuthenticationFormState().observe(this, loginFormState -> {
+            if (loginFormState == null) {
+                return;
+            }
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            if (loginFormState.getEmailError() != null) {
+                emailEditText.setError(getString(loginFormState.getEmailError()));
+            }
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
+            }
+            if (loginFormState.getConfirmPasswordError() != null) {
+                confirmPasswordEditText.setError(getString(loginFormState.getConfirmPasswordError()));
+            }
+            signUpButton.setEnabled(loginFormState.isDataValid());
+        });
+    }
+
+    private void handleSignUpResult() {
+        authenticationViewModel.getAuthenticationResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
+            }
+            if (loginResult.getError() != null) {
+                showSignUpFailed(loginResult.getError());
+            }
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
+            }
+            setResult(Activity.RESULT_OK);
+            finish();
+        });
+    }
+
+    private void updateUiWithUser(AuthenticatedUserView model) {
+        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        startActivity(HomeActivity.class);
+    }
+
+    private void showSignUpFailed(String errorString) {
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setupListeners() {
+        TextWatcher afterTextChangedListener = getSignUpDataTextWatcher();
+        usernameEditText.addTextChangedListener(afterTextChangedListener);
+        emailEditText.addTextChangedListener(afterTextChangedListener);
+        confirmPasswordEditText.addTextChangedListener(afterTextChangedListener);
+        passwordEditText.addTextChangedListener(afterTextChangedListener);
+        signUpButton.setOnClickListener(v -> doSignUp());
+
+    }
+
+    private void doSignUp() {
+        authenticationViewModel.signUp(
+                usernameEditText.getText().toString(),
+                emailEditText.getText().toString(),
+                passwordEditText.getText().toString()
+        );
+    }
+
+    private @NonNull TextWatcher getSignUpDataTextWatcher() {
+        return new AuthenticationTextWatcher(
+                authenticationViewModel,
+                emailEditText,
+                passwordEditText,
+                usernameEditText,
+                confirmPasswordEditText
+        );
+    }
+
+    private void startActivity(Class<?> activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+        finish();
+    }
+}

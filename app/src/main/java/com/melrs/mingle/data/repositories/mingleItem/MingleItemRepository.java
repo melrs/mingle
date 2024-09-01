@@ -1,4 +1,4 @@
-package com.melrs.mingle.data.mingleItem;
+package com.melrs.mingle.data.repositories.mingleItem;
 
 import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;

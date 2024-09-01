@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.melrs.mingle.data.mingleItem.MingleItemRepositoryResolver;
+import com.melrs.mingle.data.repositories.mingleItem.MingleItemRepositoryResolver;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.MingleItem;
 import com.melrs.mingle.data.model.UserBalance;

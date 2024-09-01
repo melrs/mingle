@@ -1,4 +1,4 @@
-package  com.melrs.mingle.ui.login;
+package  com.melrs.mingle.ui.auth;
 
 import android.app.Activity;
 
@@ -11,10 +11,9 @@ import android.os.Bundle;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.Editable;
+
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,12 +23,10 @@ import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.databinding.ActivitySignInBinding;
 
-import java.util.Objects;
+public class SignInActivity extends AppCompatActivity {
 
-public class LogInActivity extends AppCompatActivity {
-
-    private LoginViewModel loginViewModel;
-    private EditText usernameEditText;
+    private AuthenticationViewModel authenticationViewModel;
+    private EditText emailAddressEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private Button createAccountButton;
@@ -40,12 +37,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivitySignInBinding binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        loginViewModel = getLoginViewModel();
-        if (Objects.requireNonNull(loginViewModel.getLoginResult().getValue()).getSuccess() != null) {
-            startActivity(HomeActivity.class);
-        }
-
+        authenticationViewModel = getAuthenticationViewModel();
         bindUIComponents(binding);
         validateUserInput();
         handleLoginResult();
@@ -53,7 +45,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void bindUIComponents(ActivitySignInBinding binding) {
-        usernameEditText = binding.username;
+        emailAddressEditText = binding.emailAddress;
         passwordEditText = binding.password;
         loginButton = binding.login;
         loadingProgressBar = binding.loading;
@@ -61,90 +53,74 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void validateUserInput() {
-        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+        AuthenticationFormValidator.getInstance().getAuthenticationFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
             }
-            if (loginFormState.getUsernameError() != null) {
-                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+
+            if (loginFormState.getEmailError() != null) {
+                emailAddressEditText.setError(getString(loginFormState.getEmailError()));
             }
+
             if (loginFormState.getPasswordError() != null) {
                 passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
-            loginButton.setEnabled(loginFormState.isDataValid());
-            createAccountButton.setEnabled(loginFormState.isDataValid());
-            createAccountButton.setBackgroundColor(ContextCompat.getColor(this, R.color.primary_variant));
+
+            if(loginFormState.isDataValid()){
+                createAccountButton.setBackgroundColor(ContextCompat.getColor(this, R.color.primary));
+                createAccountButton.setEnabled(true);
+                loginButton.setEnabled(true);
+            }
         });
     }
 
     private void handleLoginResult() {
-        loginViewModel.getLoginResult().observe(this, loginResult -> {
+        authenticationViewModel.getAuthenticationResult().observe(this, loginResult -> {
             if (loginResult == null) {
                 return;
             }
+
+            loadingProgressBar.setVisibility(View.GONE);
+
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
-            }
-            if (loginResult.getSuccess() != null) {
+            } else if (loginResult.getSuccess() != null) {
                 updateUiWithUser(loginResult.getSuccess());
             }
-            loadingProgressBar.setVisibility(View.GONE);
+
             setResult(Activity.RESULT_OK);
-            finish();
         });
     }
 
     private void setupListeners() {
-        TextWatcher afterTextChangedListener = getTextChangedListener();
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
+        TextWatcher afterTextChangedListener = getLoginDataTextWatcher();
+        emailAddressEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                doSignIn();
-            }
-            return false;
-        });
-
         loginButton.setOnClickListener(v -> doSignIn());
-
-        createAccountButton.setOnClickListener(v -> startActivity(LogInActivity.class));
+        createAccountButton.setOnClickListener(v -> startActivity(SignUpActivity.class));
     }
 
     private void doSignIn() {
-        loginViewModel.login(
-                usernameEditText.getText().toString(),
+        authenticationViewModel.signIn(
+                emailAddressEditText.getText().toString(),
                 passwordEditText.getText().toString()
         );
     }
 
-    private @NonNull TextWatcher getTextChangedListener() {
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(
-                        usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString()
-                );
-            }
-        };
+    private @NonNull TextWatcher getLoginDataTextWatcher() {
+        return new AuthenticationTextWatcher(
+                authenticationViewModel,
+                emailAddressEditText,
+                passwordEditText
+        );
     }
 
-    private @NonNull LoginViewModel getLoginViewModel() {
-        return new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+    private @NonNull AuthenticationViewModel getAuthenticationViewModel() {
+        return new ViewModelProvider(this, new AuthenticationViewModelFactory())
+                .get(AuthenticationViewModel.class);
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
+    private void updateUiWithUser(AuthenticatedUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         startActivity(HomeActivity.class);
@@ -156,7 +132,7 @@ public class LogInActivity extends AppCompatActivity {
         finish();
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
+    private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }

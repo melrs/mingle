@@ -17,6 +17,8 @@ legacySupportV4 = "1.0.0"
 annotation = "1.8.2"
 sdpAndroid = "1.0.6"
 sspAndroid = "1.1.1"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,7 +38,9 @@ legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", ver
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 
