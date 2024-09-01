@@ -3,6 +3,7 @@ package  com.melrs.mingle.ui.login;
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -23,22 +24,27 @@ import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.databinding.ActivitySignInBinding;
 
+import java.util.Objects;
+
 public class LogInActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private Button createAccountButton;
     private ProgressBar loadingProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        com.melrs.mingle.databinding.ActivitySignInBinding binding = ActivitySignInBinding.inflate(getLayoutInflater());
+        ActivitySignInBinding binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         loginViewModel = getLoginViewModel();
+        if (Objects.requireNonNull(loginViewModel.getLoginResult().getValue()).getSuccess() != null) {
+            startActivity(HomeActivity.class);
+        }
 
         bindUIComponents(binding);
         validateUserInput();
@@ -47,10 +53,11 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void bindUIComponents(ActivitySignInBinding binding) {
-        usernameEditText = (EditText) binding.username;
-        passwordEditText =  (EditText) binding.password;
+        usernameEditText = binding.username;
+        passwordEditText = binding.password;
         loginButton = binding.login;
         loadingProgressBar = binding.loading;
+        createAccountButton = binding.createAccount;
     }
 
     private void validateUserInput() {
@@ -58,13 +65,15 @@ public class LogInActivity extends AppCompatActivity {
             if (loginFormState == null) {
                 return;
             }
-            loginButton.setEnabled(loginFormState.isDataValid());
             if (loginFormState.getUsernameError() != null) {
                 usernameEditText.setError(getString(loginFormState.getUsernameError()));
             }
             if (loginFormState.getPasswordError() != null) {
                 passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
+            loginButton.setEnabled(loginFormState.isDataValid());
+            createAccountButton.setEnabled(loginFormState.isDataValid());
+            createAccountButton.setBackgroundColor(ContextCompat.getColor(this, R.color.primary_variant));
         });
     }
 
@@ -73,16 +82,14 @@ public class LogInActivity extends AppCompatActivity {
             if (loginResult == null) {
                 return;
             }
-            loadingProgressBar.setVisibility(View.GONE);
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
             }
             if (loginResult.getSuccess() != null) {
                 updateUiWithUser(loginResult.getSuccess());
             }
+            loadingProgressBar.setVisibility(View.GONE);
             setResult(Activity.RESULT_OK);
-
-            //Complete and destroy login activity once successful
             finish();
         });
     }
@@ -98,9 +105,9 @@ public class LogInActivity extends AppCompatActivity {
             return false;
         });
 
-        loginButton.setOnClickListener(v -> {
-            doSignIn();
-        });
+        loginButton.setOnClickListener(v -> doSignIn());
+
+        createAccountButton.setOnClickListener(v -> startActivity(LogInActivity.class));
     }
 
     private void doSignIn() {
@@ -140,8 +147,13 @@ public class LogInActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(HomeActivity.class);
+    }
+
+    private void startActivity(Class<?> activity) {
+        Intent intent = new Intent(this, activity);
         startActivity(intent);
+        finish();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

@@ -1,14 +1,14 @@
 package com.melrs.mingle;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,8 +22,6 @@ import com.melrs.mingle.list.MingleRecyclerViewAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityHomeBinding binding;
     private final MingleUser user;
     private final UserBalance userBalance;
 
@@ -36,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpHeader();
         setUpMingleList();
@@ -68,7 +66,9 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        mockItems();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mockItems();
+        }
 
         MingleRecyclerViewAdapter adapter = new MingleRecyclerViewAdapter(
                 MingleItemRepositoryResolver.resolve().getUserMingleItems(this.user.getUserId())
@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void mockItems() {
         MingleItem item = MingleItem.create(
                 1,
