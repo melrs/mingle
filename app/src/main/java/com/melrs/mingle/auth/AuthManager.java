@@ -13,7 +13,7 @@ public class AuthManager {
     }
 
     public boolean isLoggedIn() {
-        return sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, true);
+        return sharedPreferences.getBoolean(KEY_IS_LOGGED_IN, false);
     }
 
     public void login(String username, String password) {

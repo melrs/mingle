@@ -1,6 +1,6 @@
 package com.melrs.mingle.data;
 
-import com.melrs.mingle.data.model.LoggedInUser;
+import com.melrs.mingle.data.model.MingleUser;
 
 import java.io.IOException;
 
@@ -9,13 +9,13 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<MingleUser> login(String username, String password) {
 
         try {
             // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
+            MingleUser fakeUser =
+                    new MingleUser(
+                            1,
                             "Jane Doe");
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {

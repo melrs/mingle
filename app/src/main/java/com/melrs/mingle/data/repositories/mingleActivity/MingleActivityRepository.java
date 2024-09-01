@@ -2,19 +2,19 @@ package com.melrs.mingle.data.repositories.mingleActivity;
 
 import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;
-import com.melrs.mingle.data.model.MingleActivity;
+import com.melrs.mingle.data.model.MingleItem;
 
 import java.util.List;
 
 public interface MingleActivityRepository {
 
-    MingleActivity getMingleActivityById(int id);
-    List<MingleActivity> getUserMingleActivities(int userId);
-    List<MingleActivity> getUserMingleActivitiesByType(int userId, MingleType type);
-    List<MingleActivity> getUserMingleActivitiesByStatus(int userId, MingleStatus status);
-    List<MingleActivity> getUserMingleActivitiesWithFriend(int userId, int friendId);
-    void saveMingleActivity(MingleActivity mingleActivity);
+    MingleItem getMingleActivityById(int id);
+    List<MingleItem> getUserMingleActivities(int userId);
+    List<MingleItem> getUserMingleActivitiesByType(int userId, MingleType type);
+    List<MingleItem> getUserMingleActivitiesByStatus(int userId, MingleStatus status);
+    List<MingleItem> getUserMingleActivitiesWithFriend(int userId, int friendId);
+    void saveMingleActivity(MingleItem mingleItem);
     void deleteMingleActivity(int id);
-    void updateMingleActivity(MingleActivity mingleActivity);
+    void updateMingleActivity(MingleItem mingleItem);
 
 }

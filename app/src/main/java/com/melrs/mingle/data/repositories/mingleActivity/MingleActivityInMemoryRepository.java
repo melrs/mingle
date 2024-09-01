@@ -2,7 +2,7 @@ package com.melrs.mingle.data.repositories.mingleActivity;
 
 import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;
-import com.melrs.mingle.data.model.MingleActivity;
+import com.melrs.mingle.data.model.MingleItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 public class MingleActivityInMemoryRepository implements MingleActivityRepository {
 
-    List<MingleActivity> mingleActivities;
+    List<MingleItem> mingleActivities;
 
     public MingleActivityInMemoryRepository() {
         mingleActivities = Collections.emptyList();
     }
 
     @Override
-    public MingleActivity getMingleActivityById(int id) {
+    public MingleItem getMingleActivityById(int id) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getId() == id)
@@ -26,7 +26,7 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public List<MingleActivity> getUserMingleActivities(int userId) {
+    public List<MingleItem> getUserMingleActivities(int userId) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getUserId() == userId)
@@ -34,7 +34,7 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public List<MingleActivity> getUserMingleActivitiesByType(int userId, MingleType type) {
+    public List<MingleItem> getUserMingleActivitiesByType(int userId, MingleType type) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getType() == type)
@@ -42,7 +42,7 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public List<MingleActivity> getUserMingleActivitiesByStatus(int userId, MingleStatus status) {
+    public List<MingleItem> getUserMingleActivitiesByStatus(int userId, MingleStatus status) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getStatus() == status)
@@ -50,7 +50,7 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public List<MingleActivity> getUserMingleActivitiesWithFriend(int userId, int friendId) {
+    public List<MingleItem> getUserMingleActivitiesWithFriend(int userId, int friendId) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getFriendId() == friendId)
@@ -58,8 +58,8 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public void saveMingleActivity(MingleActivity mingleActivity) {
-        this.mingleActivities.add(mingleActivity);
+    public void saveMingleActivity(MingleItem mingleItem) {
+        this.mingleActivities.add(mingleItem);
     }
 
     @Override
@@ -68,11 +68,11 @@ public class MingleActivityInMemoryRepository implements MingleActivityRepositor
     }
 
     @Override
-    public void updateMingleActivity(MingleActivity mingleActivity) {
+    public void updateMingleActivity(MingleItem mingleItem) {
         this.mingleActivities
             .stream()
-            .filter(mingleActivity1 -> mingleActivity1.getId() == mingleActivity.getId())
+            .filter(mingleActivity1 -> mingleActivity1.getId() == mingleItem.getId())
             .findFirst()
-            .ifPresent(mingleActivity1 -> mingleActivity1 = mingleActivity);
+            .ifPresent(mingleActivity1 -> mingleActivity1 = mingleItem);
     }
 }

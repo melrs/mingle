@@ -7,7 +7,7 @@ import android.util.Patterns;
 
 import com.melrs.mingle.data.LoginRepository;
 import com.melrs.mingle.data.Result;
-import com.melrs.mingle.data.model.LoggedInUser;
+import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.R;
 
 public class LoginViewModel extends ViewModel {
@@ -30,10 +30,10 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<MingleUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+            MingleUser data = ((Result.Success<MingleUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));

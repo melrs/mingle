@@ -1,7 +1,5 @@
-// MingleRecyclerViewAdapter.java
 package com.melrs.mingle.list;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;
+import com.melrs.mingle.data.model.MingleItem;
 
 import java.util.List;
 
 public class MingleRecyclerViewAdapter extends RecyclerView.Adapter<MingleRecyclerViewAdapter.MingleViewHolder> {
 
-    private List<MingleItem> mingleItems;
+    private final List<MingleItem> items;
 
     public MingleRecyclerViewAdapter(List<MingleItem> mingleItems) {
-        this.mingleItems = mingleItems;
+        this.items = mingleItems;
     }
 
     @NonNull
@@ -36,16 +35,16 @@ public class MingleRecyclerViewAdapter extends RecyclerView.Adapter<MingleRecycl
 
     @Override
     public void onBindViewHolder(MingleViewHolder holder, int position) {
-        holder.friends_name.setText(mingleItems.get(position).getName());
-        holder.amount.setText(mingleItems.get(position).getAmount());
-        holder.status_icon.setImageResource(mingleItems.get(position).getStatus() == MingleStatus.PA ? R.drawable.ic_done_all : R.drawable.ic_friends);
-        holder.mingle_status.setText(mingleItems.get(position).getStatus() == MingleStatus.PA ? "Pago" : "A pagar");
-        holder.activity_icon.setImageResource(mingleItems.get(position).getType() == MingleType.MI ? R.drawable.ic_mingle_in : R.drawable.ic_mingle_out);
+        holder.friends_name.setText(items.get(position).getDescription());
+        holder.amount.setText(items.get(position).getAmount().toString());
+        holder.status_icon.setImageResource(items.get(position).getStatus() == MingleStatus.PA ? R.drawable.ic_done_all : R.drawable.ic_friends);
+        holder.mingle_status.setText(items.get(position).getStatus() == MingleStatus.PA ? "Pago" : "A pagar");
+        holder.activity_icon.setImageResource(items.get(position).getType() == MingleType.MI ? R.drawable.ic_mingle_in : R.drawable.ic_mingle_out);
     }
 
     @Override
     public int getItemCount() {
-        return mingleItems.size();
+        return items.size();
     }
 
     public static class MingleViewHolder extends RecyclerView.ViewHolder {

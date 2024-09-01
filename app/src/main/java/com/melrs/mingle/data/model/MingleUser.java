@@ -1,16 +1,16 @@
 package com.melrs.mingle.data.model;
 
-public class LoggedInUser {
+public class MingleUser {
 
-    private final String userId;
+    private final int userId;
     private final String displayName;
 
-    public LoggedInUser(String userId, String displayName) {
+    public MingleUser(int userId, String displayName) {
         this.userId = userId;
         this.displayName = displayName;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 

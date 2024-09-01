@@ -16,5 +16,5 @@
     <color name="shadow">#000000</color>
     <color name="success">#4CAF50</color>
     <color name="on_success">#5A6CF3</color>
-    <color name="cardview_light_background">#DDDDFF</color>
+    <color name="cardview_light_background">#E0DFE2</color>
 </resources>

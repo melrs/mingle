@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import javax.money.Monetary;
 import javax.money.MonetaryAmount;
 
-public class MingleActivity {
+public class MingleItem {
 
     private final int id;
     private final int userId;
@@ -23,7 +23,7 @@ public class MingleActivity {
     private final LocalDateTime updated_at;
 
 
-    public MingleActivity(
+    public MingleItem(
             int id,
             int userId, 
             int friendId, 
@@ -46,7 +46,7 @@ public class MingleActivity {
     }
     
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static MingleActivity create(
+    public static MingleItem create(
             int id,
             int userId, 
             int friendId,
@@ -58,7 +58,7 @@ public class MingleActivity {
             String status,
             String updated_at
     ) {
-        return new MingleActivity(
+        return new MingleItem(
                 id,
                 userId,
                 friendId,

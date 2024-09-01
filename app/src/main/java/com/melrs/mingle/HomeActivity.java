@@ -3,30 +3,33 @@ package com.melrs.mingle;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.melrs.mingle.data.model.LoggedInUser;
+import com.melrs.mingle.data.mingleItem.MingleItemRepositoryResolver;
+import com.melrs.mingle.data.model.MingleUser;
+import com.melrs.mingle.data.model.MingleItem;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
+import com.melrs.mingle.list.MingleRecyclerViewAdapter;
 
 
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomeBinding binding;
-    private final LoggedInUser user;
+    private final MingleUser user;
     private final UserBalance userBalance;
 
     public HomeActivity() {
-        this.user = new LoggedInUser("1", "John Doe");
-        this.userBalance = UserBalance.create(1, "10000.86", "USD");
+        this.user = new MingleUser(1, "John Doe");
+        this.userBalance = UserBalance.create(1, "100.86", "USD");
     }
 
     @Override
@@ -35,7 +38,12 @@ public class HomeActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setUpHeader();
+        setUpMingleList();
 
+    }
+
+    private void setUpHeader() {
         TextView text_username= findViewById(R.id.userNameView);
         text_username.setText(this.user.getDisplayName());
 
@@ -48,12 +56,59 @@ public class HomeActivity extends AppCompatActivity {
         text_balance_currency.setText(this.userBalance.getBalance().getCurrency().getCurrencyCode());
 
         ImageView user_profile_image = findViewById(R.id.imageView);
-        user_profile_image.setImageResource(R.drawable.mingle_icon);
+        user_profile_image.setImageResource(R.drawable.ic_user_icon);
 
         TextView text_balance_cents = findViewById(R.id.cents);
         text_balance_cents.setText(String.format(",%s", balance[1]));
+    }
 
-        startActivity(new Intent(this, MingleListActivity.class));
+    private void setUpMingleList() {
+        RecyclerView recyclerView = findViewById(R.id.mingle_list);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        mockItems();
+
+        MingleRecyclerViewAdapter adapter = new MingleRecyclerViewAdapter(
+                MingleItemRepositoryResolver.resolve().getUserMingleItems(this.user.getUserId())
+        );
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void mockItems() {
+        MingleItem item = MingleItem.create(
+                1,
+                1,
+                2,
+                "25.00",
+                "BRL",
+                "2021-09-01T00:00:00",
+                "Just a mingle",
+                "MI",
+                "PA",
+                "2021-09-01T08:00:00"
+        );
+        MingleItem item2 = MingleItem.create(
+                2,
+                1,
+                2,
+                "25.00",
+                "BRL",
+                "2021-09-01T00:00:00",
+                "Other a mingle",
+                "MO",
+                "CA",
+                "2021-09-01T08:00:00"
+        );
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
 
     }
 }
