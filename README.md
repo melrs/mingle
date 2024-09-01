@@ -50,3 +50,25 @@ This Android app uses Java and Kotlin, managed with Gradle. It includes user aut
 2. **Open**: In Android Studio.
 3. **Build**: Use build option.
 4. **Run**: On emulator or device.
+
+### Non-Functional Requirements and/or Constraints
+
+- [ ] User registration with profile separation
+- [ ] Use of internal storage
+- [ ] Use of at least two sensors and/or physical device resources
+- [ ] Use of external data storage
+
+### Functionalities
+- [ ] Create account
+- [ ] Log in
+- [ ] Input bill details
+- [ ] View bill details
+- [ ] Edit bill details
+- [ ] Split bill with friends
+- [ ] Digitalize receipts
+- [ ] View digitized receipts
+- [ ] Edit user profile
+- [ ] Bill splitting notifications
+- [ ] Bill splitting history
+- [ ] Friend search
+- [ ] Data synchronization with the cloud

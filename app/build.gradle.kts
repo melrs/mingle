@@ -2,6 +2,7 @@ import com.android.build.api.dsl.Packaging
 
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -60,4 +61,6 @@ dependencies {
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
     implementation(libs.moneta)
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+    implementation("com.google.firebase:firebase-analytics")
 }
