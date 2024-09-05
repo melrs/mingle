@@ -27,12 +27,4 @@ public class EditProfileFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

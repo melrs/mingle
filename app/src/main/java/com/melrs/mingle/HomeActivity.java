@@ -3,6 +3,7 @@ package com.melrs.mingle;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,23 +17,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.melrs.mingle.data.repositories.mingleItem.MingleItemRepositoryResolver;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.MingleItem;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.list.MingleRecyclerViewAdapter;
+import com.melrs.mingle.utils.BottomNavHandler;
 
 
 public class HomeActivity extends AppCompatActivity {
 
     private final MingleUser user;
     private final UserBalance userBalance;
-    private Toolbar toolbar;
-
 
     public HomeActivity() {
-        this.user = new MingleUser(1, "John Doe");
+        this.user = new MingleUser(1, "m Doe");
         this.userBalance = UserBalance.create(1, "100.86", "USD");
     }
 
@@ -42,9 +43,38 @@ public class HomeActivity extends AppCompatActivity {
 
         ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setUpNavMenu();
         setUpHeader();
         setUpMingleList();
 
+    }
+
+    private void setUpNavMenu() {
+        BottomNavHandler.getInstance(this).setupBottomNav(findViewById(R.id.bottomNavigationView));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bottom_nav_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.nav_profile) {
+            Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.nav_camera) {
+            Toast.makeText(this, "Camera clicked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setUpHeader() {
@@ -80,25 +110,6 @@ public class HomeActivity extends AppCompatActivity {
                 MingleItemRepositoryResolver.resolve().getUserMingleItems(this.user.getUserId())
         );
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            Toast.makeText(this, "settings clicked", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

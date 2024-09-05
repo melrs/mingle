@@ -33,7 +33,7 @@
         <item name="tint">@color/primary_dark</item>
     </style>
 
-    <style name="ToolbarTitleAppearance" parent="@android:style/TextAppearance.Widget.ActionBar.Title">
+    <style name="ToolbarTitleAppearance">
         <item name="android:textSize">@dimen/_22sdp</item>
         <item name="android:textColor">@color/primary_dark</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

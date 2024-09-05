@@ -94,4 +94,7 @@
     <string name="notifications">notifications</string>
     <string name="settings">settings</string>
     <string name="save">save</string>
+    <string name="me">me</string>
+    <string name="note">note</string>
+    <string name="home">home</string>
 </resources>
