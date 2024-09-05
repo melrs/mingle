@@ -41,6 +41,7 @@ android {
             excludes += "javamoney.properties"
         }
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -56,6 +57,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.annotation)
     implementation(libs.firebase.auth)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.preference)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

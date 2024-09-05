@@ -85,4 +85,13 @@
     <string name="title_activity_create_account">CreateAccountActivity</string>
     <string name="confirm_password">confirm password</string>
     <string name="username">username</string>
+    <string name="change_profile_picture">chnge profile picture</string>
+    <string name="edit_name">edit name</string>
+    <string name="date_of_birth">date_of_birth</string>
+    <string name="pronouns">pronouns</string>
+    <string name="zip_code">zip code</string>
+    <string name="currency">currency</string>
+    <string name="notifications">notifications</string>
+    <string name="settings">settings</string>
+    <string name="save">save</string>
 </resources>

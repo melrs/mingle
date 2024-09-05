@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +9,14 @@
     android:background="@color/on_primary"
     tools:context=".HomeActivity">
 
+    <include layout="@layout/toolbar" />
+
     <RelativeLayout
         android:id="@+id/homeHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
         android:paddingStart="@dimen/_12sdp"
         android:paddingEnd="@dimen/_12sdp">
 
@@ -43,10 +45,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            app:cardCornerRadius="@dimen/_360sdp"
 
-            android:layout_height="wrap_content">
+            app:cardCornerRadius="@dimen/_360sdp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -96,16 +98,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/roboto_condensed_regular"
-                    android:text="@string/_100"
-                    android:textAlignment="center"
                     android:gravity="center"
                     android:maxLines="1"
+                    android:text="@string/_100"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_73sdp"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="@dimen/_34sdp"
                     app:autoSizeMaxTextSize="@dimen/_73sdp"
-                    app:autoSizeStepGranularity="@dimen/_1sdp"  />
+                    app:autoSizeMinTextSize="@dimen/_34sdp"
+                    app:autoSizeStepGranularity="@dimen/_1sdp"
+                    app:autoSizeTextType="uniform" />
 
                 <LinearLayout
                     android:id="@+id/balanceLayout"

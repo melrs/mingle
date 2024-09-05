@@ -16,6 +16,7 @@
         <item name="colorTertiary">@color/tertiary</item>
         <item name="colorOutline">@color/outline</item>>
         <item name="android:textAppearance">@style/BaseTextAppearance</item>
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
     </style>
 
     <!-- Base text appearance -->
