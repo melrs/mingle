@@ -10,7 +10,7 @@
     android:textAlignment="center"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.profile.Profile">
+    tools:context=".ui.profile.ProfileFragment">
 
     <RelativeLayout
         android:id="@+id/profileHeader"
@@ -123,7 +123,7 @@
                 android:layout_marginTop="12dp" />
 
             <TextView
-                android:id="@+id/dobTextView"
+                android:id="@+id/birthdayTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -155,7 +155,7 @@
                 android:layout_marginTop="12dp" />
 
             <TextView
-                android:id="@+id/accountCreationDateTextView"
+                android:id="@+id/minglerSinceTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"

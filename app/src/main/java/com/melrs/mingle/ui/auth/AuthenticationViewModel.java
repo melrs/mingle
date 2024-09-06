@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.melrs.mingle.R;
-
 import java.util.Objects;
 
 public class AuthenticationViewModel extends ViewModel {

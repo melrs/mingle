@@ -13,8 +13,8 @@ import javax.money.MonetaryAmount;
 public class MingleItem {
 
     private final int id;
-    private final int userId;
-    private final int friendId;
+    private final String userId;
+    private final String friendId;
     private final MonetaryAmount amount;
     private final LocalDateTime created_at;
     private final String description;
@@ -25,8 +25,8 @@ public class MingleItem {
 
     public MingleItem(
             int id,
-            int userId, 
-            int friendId, 
+            String userId,
+            String friendId,
             MonetaryAmount amount,
             LocalDateTime created_at, 
             String description, 
@@ -48,8 +48,8 @@ public class MingleItem {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static MingleItem create(
             int id,
-            int userId, 
-            int friendId,
+            String userId,
+            String friendId,
             String balance,
             String currencyCode,
             String created_at,
@@ -75,11 +75,11 @@ public class MingleItem {
         return id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
     
-    public int getFriendId() {
+    public String getFriendId() {
         return friendId;
     }
     

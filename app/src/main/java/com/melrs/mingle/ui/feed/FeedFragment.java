@@ -90,8 +90,8 @@ public class FeedFragment extends Fragment {
     private void mockItems() {
         MingleItem item = MingleItem.create(
                 1,
-                1,
-                2,
+                "1",
+                "2",
                 "25.00",
                 "BRL",
                 "2021-09-01T00:00:00",
@@ -102,8 +102,8 @@ public class FeedFragment extends Fragment {
         );
         MingleItem item2 = MingleItem.create(
                 2,
-                1,
-                2,
+                "1",
+                "2",
                 "25.00",
                 "BRL",
                 "2021-09-01T00:00:00",

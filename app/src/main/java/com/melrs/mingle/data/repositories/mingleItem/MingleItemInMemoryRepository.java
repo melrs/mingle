@@ -6,6 +6,7 @@ import com.melrs.mingle.data.model.MingleItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MingleItemInMemoryRepository implements MingleItemRepository {
@@ -26,15 +27,15 @@ public class MingleItemInMemoryRepository implements MingleItemRepository {
     }
 
     @Override
-    public List<MingleItem> getUserMingleItems(int userId) {
+    public List<MingleItem> getUserMingleItems(String userId) {
         return this.mingleActivities
             .stream()
-            .filter(mingleActivity -> mingleActivity.getUserId() == userId)
+            .filter(mingleActivity -> Objects.equals(mingleActivity.getUserId(), userId))
             .collect(Collectors.toList());
     }
 
     @Override
-    public List<MingleItem> getUserMingleItemsByType(int userId, MingleType type) {
+    public List<MingleItem> getUserMingleItemsByType(String userId, MingleType type) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getType() == type)
@@ -42,7 +43,7 @@ public class MingleItemInMemoryRepository implements MingleItemRepository {
     }
 
     @Override
-    public List<MingleItem> getUserMingleItemsByStatus(int userId, MingleStatus status) {
+    public List<MingleItem> getUserMingleItemsByStatus(String userId, MingleStatus status) {
         return this.mingleActivities
             .stream()
             .filter(mingleActivity -> mingleActivity.getStatus() == status)
@@ -50,10 +51,10 @@ public class MingleItemInMemoryRepository implements MingleItemRepository {
     }
 
     @Override
-    public List<MingleItem> getUserMingleItemsWithFriend(int userId, int friendId) {
+    public List<MingleItem> getUserMingleItemsWithFriend(String userId, String friendId) {
         return this.mingleActivities
             .stream()
-            .filter(mingleActivity -> mingleActivity.getFriendId() == friendId)
+            .filter(mingleActivity -> Objects.equals(mingleActivity.getFriendId(), friendId))
             .collect(Collectors.toList());
     }
 

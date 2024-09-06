@@ -23,6 +23,7 @@ sspAndroid = "1.1.1"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 preference = "1.2.0"
+firebaseFirestore = "25.1.0"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -49,6 +50,7 @@ sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

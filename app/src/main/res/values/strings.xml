@@ -88,7 +88,7 @@
     <string name="change_profile_picture">chnge profile picture</string>
     <string name="edit_name">edit name</string>
     <string name="date_of_birth">date_of_birth</string>
-    <string name="pronouns">pronouns:</string>
+    <string name="pronouns">pronouns</string>
     <string name="zip_code">zip code</string>
     <string name="currency">currency</string>
     <string name="notifications">notifications</string>
@@ -99,13 +99,14 @@
     <string name="home">home</string>
     <string name="edit_profile">edit profile</string>
     <string name="_01_01_2020">01/01/2020</string>
-    <string name="mingler_since">mingler since:</string>
+    <string name="mingler_since">mingler since</string>
     <string name="_01_01_1990">01/01/1990</string>
-    <string name="birthday">birthday:</string>
+    <string name="birthday">birthday</string>
     <string name="jane_doe_example_com">jane.doe@example.com</string>
-    <string name="email">email:</string>
+    <string name="email">email</string>
     <string name="user_name">user name</string>
     <string name="she_her">she/her</string>
-<!-- TODO: Remove or change this placeholder text -->
+<!-- TODO Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_email">change email</string>
 </resources>

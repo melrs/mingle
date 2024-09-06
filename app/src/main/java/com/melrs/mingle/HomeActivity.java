@@ -8,7 +8,7 @@ import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.ui.feed.FeedFragment;
-import com.melrs.mingle.ui.profile.Profile;
+import com.melrs.mingle.ui.profile.ProfileFragment;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -17,7 +17,7 @@ public class HomeActivity extends AppCompatActivity {
     private final UserBalance userBalance;
 
     public HomeActivity() {
-        this.user = new MingleUser(1, "m Doe");
+        this.user = new MingleUser("1", "m Doe");
         this.userBalance = UserBalance.create(1, "100.86", "USD");
     }
 
@@ -48,11 +48,11 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             if (id == R.id.nav_profile) {
-                selectedFragment = new Profile();
+                selectedFragment = ProfileFragment.newInstance(getSupportFragmentManager());
             }
 
             if (id == R.id.nav_camera) {
-                selectedFragment = new Profile();
+                selectedFragment = new ProfileFragment(getSupportFragmentManager());
             }
 
             if (selectedFragment != null) {
