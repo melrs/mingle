@@ -54,7 +54,11 @@ public class MingleItem {
             int id,
             String userId,
             String friendId,
+<<<<<<< HEAD
             String amount,
+=======
+            String balance,
+>>>>>>> 182f0d2 (User Profile)
             String currencyCode,
             String created_at,
             String description,
