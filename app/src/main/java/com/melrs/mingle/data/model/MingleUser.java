@@ -2,6 +2,8 @@ package com.melrs.mingle.data.model;
 
 import androidx.annotation.Nullable;
 
+import java.util.Calendar;
+
 public class MingleUser {
 
     public @Nullable String userId;
@@ -33,7 +35,7 @@ public class MingleUser {
         this.minglerSince = minglerSince;
     }
 
-    public MingleUser() {
+    private MingleUser() {
         this.userId = "";
         this.displayName = "";
         this.username = "";
@@ -58,8 +60,29 @@ public class MingleUser {
         this.minglerSince = "11/12/1990";
     }
 
+    private MingleUser(
+            @Nullable String userId,
+            @Nullable String email,
+            @Nullable String username
+    ) {
+        this.userId = userId;
+        this.displayName = username;
+        this.username = username;
+        this.email = email;
+        this.minglerSince = Calendar.getInstance().getTime().toString();
+    }
+
+
     public static MingleUser empty() {
         return new MingleUser();
+    }
+
+    public static MingleUser createNew(
+            String userId,
+            String username,
+            String email
+    ) {
+        return new MingleUser(userId, email, username);
     }
 
     @Nullable

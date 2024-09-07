@@ -27,10 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_regular"
-            android:text="@string/hello"
+            android:text="@string/this_is"
             android:textColor="@color/black"
             android:textSize="@dimen/_24sdp"
             android:textStyle="bold"
+            android:layout_marginTop="@dimen/_26sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RelativeOverlap" />
@@ -41,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/helloTextView"
             android:fontFamily="@font/roboto_thin"
-            android:text="@string/jane_doe"
             android:textColor="@color/black"
             android:textSize="@dimen/_26sdp" />
 
@@ -94,8 +94,7 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/jane_doe"/>
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,8 +109,7 @@
                 android:id="@+id/emailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/jane_doe_example_com"/>
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -126,8 +124,7 @@
                 android:id="@+id/birthdayTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/_01_01_1990"/>
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -142,8 +139,7 @@
                 android:id="@+id/pronounsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/she_her" />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -158,8 +154,7 @@
                 android:id="@+id/minglerSinceTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/_01_01_2020" />
+                android:layout_marginTop="4dp" />
 
             <Button
                 android:id="@+id/editProfileButton"

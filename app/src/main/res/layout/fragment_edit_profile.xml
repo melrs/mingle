@@ -15,18 +15,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/_16sdp"
-        android:paddingStart="@dimen/_13sdp"
-        android:paddingEnd="@dimen/_13sdp">
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp">
 
         <TextView
             android:id="@+id/helloTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_regular"
-            android:text="@string/hello"
+            android:text="@string/edit"
             android:textColor="@color/black"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
+            android:layout_marginTop="@dimen/_26sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RelativeOverlap" />
@@ -37,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/helloTextView"
             android:fontFamily="@font/roboto_thin"
-            android:text="@string/jane_doe"
             android:textColor="@color/black"
             android:textSize="@dimen/_23sdp" />
 
@@ -72,7 +72,7 @@
     <ScrollView
         android:id="@+id/profileScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:padding="@dimen/_16sdp"
@@ -90,13 +90,13 @@
                 android:id="@+id/nameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
+                android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameEdit"
+                    android:id="@+id/displayName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/edit_name"
+                    android:hint="@string/display_name"
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,10 +104,10 @@
                 android:id="@+id/usernameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
+                android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameEdit"
+                    android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/user_name"
@@ -118,13 +118,13 @@
                 android:id="@+id/emailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
+                android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emailEdit"
+                    android:id="@+id/emailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/change_email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,10 +132,10 @@
                 android:id="@+id/birthdayLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
+                android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/birthdayEdit"
+                    android:id="@+id/birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/birthday"
@@ -146,10 +146,10 @@
                 android:id="@+id/pronounsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
+                android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/pronounsEdit"
+                    android:id="@+id/pronouns"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/pronouns"
