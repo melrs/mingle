@@ -4,25 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
+import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 import com.melrs.mingle.databinding.ActivitySignUpBinding;
-import com.melrs.mingle.utils.FirestoreCollection;
-
-import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -89,10 +84,10 @@ public class SignUpActivity extends AppCompatActivity {
                 showSignUpFailed(loginResult.getError());
             }
             if (loginResult.getSuccess() != null) {
+                saveUserInfo(loginResult.getSuccess());
                 updateUiWithUser(loginResult.getSuccess());
             }
             setResult(Activity.RESULT_OK);
-            finish();
         });
     }
 
@@ -113,7 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
         confirmPasswordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         signUpButton.setOnClickListener(v -> doSignUp());
-
     }
 
     private void doSignUp() {
@@ -122,25 +116,16 @@ public class SignUpActivity extends AppCompatActivity {
                 emailEditText.getText().toString(),
                 passwordEditText.getText().toString()
         );
-        saveUserInfo();
-
     }
 
-    private void saveUserInfo() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        MingleUser user = MingleUser.empty();
-        user.setUsername(usernameEditText.getText().toString());
-        user.setEmail(emailEditText.getText().toString());
-        user.setDisplayName(usernameEditText.getText().toString());
-        assert user.getEmail() != null;
-        db.collection(FirestoreCollection.USER.getName())
-                .document(user.getEmail())
-                .set(user)
-                .addOnCompleteListener(task -> {
-                    Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(getApplicationContext(), "Failed to add user", Toast.LENGTH_SHORT).show();
-                });
+    private void saveUserInfo(AuthenticatedUserView model) {
+        UserRepositoryResolver
+            .resolve()
+            .upsert(
+                MingleUser.createNew(model.getUserId(), model.getDisplayName(), model.getEmail()),
+                t -> Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show(),
+                e -> Toast.makeText(getApplicationContext(), "Failed to add user", Toast.LENGTH_SHORT).show()
+            );
     }
 
     private @NonNull TextWatcher getSignUpDataTextWatcher() {

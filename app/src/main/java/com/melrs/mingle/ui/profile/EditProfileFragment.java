@@ -14,14 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.utils.FirestoreCollection;
+import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 
 import java.util.Objects;
 
@@ -29,7 +25,7 @@ public class EditProfileFragment extends Fragment {
 
     private EditProfileViewModel mViewModel;
     FragmentManager fragmentManager;
-    MingleUser profile;
+    MingleUser user;
     TextInputEditText nameEditText;
     TextInputEditText usernameEditText;
     TextInputEditText emailEditText;
@@ -40,7 +36,7 @@ public class EditProfileFragment extends Fragment {
     public EditProfileFragment(FragmentManager fragmentManager, MingleUser user) {
         super();
         this.fragmentManager = fragmentManager;
-        this.profile = user;
+        this.user = user;
     }
 
     public static EditProfileFragment newInstance(FragmentManager fragmentManager, MingleUser user) {
@@ -56,53 +52,38 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void bindUIComponents(View view) {
-        nameEditText = view.findViewById(R.id.nameEdit);
-        usernameEditText = view.findViewById(R.id.usernameEdit);
-        emailEditText = view.findViewById(R.id.emailEdit);
-        birthDateEditText = view.findViewById(R.id.birthdayEdit);
-        pronounsEditText = view.findViewById(R.id.pronounsEdit);
+        nameEditText = view.findViewById(R.id.displayName);
+        usernameEditText = view.findViewById(R.id.username);
+        emailEditText = view.findViewById(R.id.emailAddress);
+        birthDateEditText = view.findViewById(R.id.birthday);
+        pronounsEditText = view.findViewById(R.id.pronouns);
         editProfileButton = view.findViewById(R.id.saveButton);
-        nameEditText.setText(profile.getDisplayName());
-        usernameEditText.setText(profile.getUsername());
-        emailEditText.setText(profile.getEmail());
-        birthDateEditText.setText(profile.getBirthDate());
-        pronounsEditText.setText(profile.getPronouns());
+
+        nameEditText.setText(user.getDisplayName());
+        usernameEditText.setText(user.getUsername());
+        emailEditText.setText(user.getEmail());
+        birthDateEditText.setText(user.getBirthDate());
+        pronounsEditText.setText(user.getPronouns());
     }
 
     private void setupSaveButtonListener() {
         editProfileButton.setOnClickListener(v -> {
             saveProfile();
-
         });
     }
 
     private void saveProfile() {
-        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(FirestoreCollection.USER.getName()).document(userId)
-                .update(
-                        "displayName", Objects.requireNonNull(nameEditText.getText()).toString(),
-                        "username", Objects.requireNonNull(usernameEditText.getText()).toString(),
-                        "email", Objects.requireNonNull(emailEditText.getText()).toString(),
-                        "birthDate", Objects.requireNonNull(birthDateEditText.getText()).toString(),
-                        "pronouns", Objects.requireNonNull(pronounsEditText.getText()).toString(),
-                        "balance", Objects.requireNonNull(profile.getBalance()),
-                        "minglerSince", Objects.requireNonNull(profile.getMinglerSince())
-                )
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        String message = "Profile updated successfully";
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String message = "Failed to update profile";
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    }
-                });
+        this.user.setDisplayName(Objects.requireNonNull(nameEditText.getText()).toString());
+        this.user.setUsername(Objects.requireNonNull(usernameEditText.getText()).toString());
+        this.user.setEmail(Objects.requireNonNull(emailEditText.getText()).toString());
+        this.user.setBirthDate(Objects.requireNonNull(birthDateEditText.getText()).toString());
+        this.user.setPronouns(Objects.requireNonNull(pronounsEditText.getText()).toString());
+
+        UserRepositoryResolver.resolve().upsert(
+                this.user,
+                t -> Toast.makeText(getContext(),"Profile updated successfully", Toast.LENGTH_SHORT).show(),
+                t -> Toast.makeText(getContext(),"Failed to update profile", Toast.LENGTH_SHORT).show()
+        );
     }
 
 }

@@ -1,7 +1,5 @@
 package com.melrs.mingle.ui.profile;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -11,24 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseUser;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.utils.FirestoreCollection;
+import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 
 import java.util.Objects;
 
@@ -46,7 +37,17 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.profile = MingleUser.empty();
+        setUpUserProfile();
+    }
+
+    private void setUpUserProfile() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        UserRepositoryResolver
+            .resolve()
+            .getUserInfoById(user.getUid())
+            .addOnSuccessListener(u-> profile = u)
+            .addOnFailureListener(e -> profile = MingleUser.createNew(user.getUid(), user.getEmail(), user.getEmail()));
     }
 
     public static ProfileFragment newInstance(FragmentManager fragmentManager) {
@@ -69,29 +70,12 @@ public class ProfileFragment extends Fragment {
         pronouns = view.findViewById(R.id.pronounsTextView);
         minglerSince = view.findViewById(R.id.minglerSinceTextView);
 
-        String userEmail = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        assert userEmail != null;
-        db.collection(FirestoreCollection.USER.getName()).document(userEmail)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        profile = documentSnapshot.toObject(MingleUser.class);
-                        name.setText(profile.getDisplayName());
-                        username.setText(profile.getUsername());
-                        email.setText(profile.getEmail());
-                        birthday.setText(profile.getBirthDate());
-                        pronouns.setText(profile.getPronouns());
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    String message = "Failed to update profile";
-                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                });
-
-
+        name.setText(profile.getDisplayName());
+        username.setText(profile.getUsername());
+        email.setText(profile.getEmail());
+        birthday.setText(profile.getBirthDate());
+        pronouns.setText(profile.getPronouns());
+        minglerSince.setText(profile.getMinglerSince());
     }
 
     private void setupEditProfileButtonListener(View view) {
