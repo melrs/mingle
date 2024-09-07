@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.melrs.mingle.R;
-
 import java.util.Objects;
 
 public class AuthenticationViewModel extends ViewModel {
@@ -27,7 +25,7 @@ public class AuthenticationViewModel extends ViewModel {
         auth.signInWithEmailAndPassword(emailAddress, password)
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    authenticationResult.setValue(new AuthenticationResult(new AuthenticatedUserView(emailAddress)));
+                    getSuccessfulAuthenticationResult(emailAddress, emailAddress);
                 } else {
                     authenticationResult.setValue(new AuthenticationResult(Objects.requireNonNull(task.getException()).getMessage()));
                 }
@@ -39,7 +37,7 @@ public class AuthenticationViewModel extends ViewModel {
         auth.createUserWithEmailAndPassword(emailAddress, password)
             .addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    authenticationResult.setValue(new AuthenticationResult(new AuthenticatedUserView(username)));
+                    getSuccessfulAuthenticationResult(emailAddress, username);
                 } else {
                     authenticationResult.setValue(new AuthenticationResult(Objects.requireNonNull(task.getException()).getMessage()));
                 }
@@ -51,8 +49,16 @@ public class AuthenticationViewModel extends ViewModel {
         authenticationResult.setValue(new AuthenticationResult());
     }
 
-    public boolean isUserAuthenticated() {
-        return auth.getCurrentUser() != null;
+    private void getSuccessfulAuthenticationResult(String emailAddress, String username) {
+        authenticationResult.setValue(
+                new AuthenticationResult(
+                        new AuthenticatedUserView(
+                                username,
+                                emailAddress,
+                                Objects.requireNonNull(auth.getCurrentUser()).getUid()
+                        )
+                )
+        );
     }
 
 }

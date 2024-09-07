@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
+import com.melrs.mingle.data.model.MingleUser;
+import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 import com.melrs.mingle.databinding.ActivitySignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -82,10 +84,10 @@ public class SignUpActivity extends AppCompatActivity {
                 showSignUpFailed(loginResult.getError());
             }
             if (loginResult.getSuccess() != null) {
+                saveUserInfo(loginResult.getSuccess());
                 updateUiWithUser(loginResult.getSuccess());
             }
             setResult(Activity.RESULT_OK);
-            finish();
         });
     }
 
@@ -106,7 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
         confirmPasswordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         signUpButton.setOnClickListener(v -> doSignUp());
-
     }
 
     private void doSignUp() {
@@ -115,6 +116,16 @@ public class SignUpActivity extends AppCompatActivity {
                 emailEditText.getText().toString(),
                 passwordEditText.getText().toString()
         );
+    }
+
+    private void saveUserInfo(AuthenticatedUserView model) {
+        UserRepositoryResolver
+            .resolve()
+            .upsert(
+                MingleUser.createNew(model.getUserId(), model.getDisplayName(), model.getEmail()),
+                t -> Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show(),
+                e -> Toast.makeText(getApplicationContext(), "Failed to add user", Toast.LENGTH_SHORT).show()
+            );
     }
 
     private @NonNull TextWatcher getSignUpDataTextWatcher() {

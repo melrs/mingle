@@ -19,4 +19,14 @@ public enum MingleType {
     public String getDescription() {
         return description;
     }
+
+    public static String[] cases() {
+        MingleType[] statuses = MingleType.values();
+        String[] values = new String[statuses.length];
+        for (int i = 0; i < statuses.length; i++) {
+            values[i] = statuses[i].getCode();
+        }
+
+        return values;
+    }
 }

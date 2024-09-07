@@ -1,23 +1,17 @@
 package com.melrs.mingle;
 
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.melrs.mingle.data.repositories.mingleItem.MingleItemRepositoryResolver;
+import androidx.fragment.app.Fragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.data.model.MingleItem;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
-import com.melrs.mingle.list.MingleRecyclerViewAdapter;
+import com.melrs.mingle.ui.feed.FeedFragment;
+import com.melrs.mingle.ui.mingleitem.AddManualMingleItemFragment;
+import com.melrs.mingle.ui.profile.ProfileFragment;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -26,8 +20,10 @@ public class HomeActivity extends AppCompatActivity {
     private final UserBalance userBalance;
 
     public HomeActivity() {
-        this.user = new MingleUser(1, "John Doe");
-        this.userBalance = UserBalance.create(1, "100.86", "USD");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        this.user = new MingleUser(user.getUid(), user.getEmail());
+        this.userBalance = UserBalance.create(user.getUid(), "100.86", "USD");
     }
 
     @Override
@@ -36,80 +32,41 @@ public class HomeActivity extends AppCompatActivity {
 
         ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setUpHeader();
-        setUpMingleList();
-
+        setUpFragment(new FeedFragment(this.user, this.userBalance));
+        setUpNavMenu();
     }
 
-    private void setUpHeader() {
-        TextView text_username= findViewById(R.id.userNameView);
-        text_username.setText(this.user.getDisplayName());
-
-        TextView text_balance_amount = findViewById(R.id.userBalance);
-        String[] balance = this.userBalance.getBalance().getNumber().toString().split("\\.");
-
-        text_balance_amount.setText(balance[0]);
-
-        TextView text_balance_currency = findViewById(R.id.rs);
-        text_balance_currency.setText(this.userBalance.getBalance().getCurrency().getCurrencyCode());
-
-        ImageView user_profile_image = findViewById(R.id.imageView);
-        user_profile_image.setImageResource(R.drawable.ic_user_icon);
-
-        TextView text_balance_cents = findViewById(R.id.cents);
-        text_balance_cents.setText(String.format(",%s", balance[1]));
+    private void setUpFragment(Fragment selectedFragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, selectedFragment)
+                .commit();
     }
 
-    private void setUpMingleList() {
-        RecyclerView recyclerView = findViewById(R.id.mingle_list);
+    private void setUpNavMenu() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            Fragment selectedFragment = null;
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mockItems();
-        }
+            if (id == R.id.nav_home) {
+                selectedFragment = new FeedFragment(this.user, this.userBalance);
+            }
 
-        MingleRecyclerViewAdapter adapter = new MingleRecyclerViewAdapter(
-                MingleItemRepositoryResolver.resolve().getUserMingleItems(this.user.getUserId())
-        );
-        recyclerView.setAdapter(adapter);
+            if (id == R.id.nav_profile) {
+                selectedFragment = ProfileFragment.newInstance(getSupportFragmentManager());
+            }
+
+            if (id == R.id.nav_camera) {
+                selectedFragment = new AddManualMingleItemFragment();
+            }
+
+            if (selectedFragment != null) {
+                setUpFragment(selectedFragment);
+                return true;
+            }
+
+            return false;
+        });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void mockItems() {
-        MingleItem item = MingleItem.create(
-                1,
-                1,
-                2,
-                "25.00",
-                "BRL",
-                "2021-09-01T00:00:00",
-                "Just a mingle",
-                "MI",
-                "PA",
-                "2021-09-01T08:00:00"
-        );
-        MingleItem item2 = MingleItem.create(
-                2,
-                1,
-                2,
-                "25.00",
-                "BRL",
-                "2021-09-01T00:00:00",
-                "Other a mingle",
-                "MO",
-                "CA",
-                "2021-09-01T08:00:00"
-        );
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-
-    }
 }

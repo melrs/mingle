@@ -41,6 +41,7 @@ android {
             excludes += "javamoney.properties"
         }
     }
+    buildToolsVersion = "35.0.0"
 }
 
 dependencies {
@@ -56,12 +57,17 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.annotation)
     implementation(libs.firebase.auth)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.preference)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
     implementation(libs.moneta)
-    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.analytics)
+    implementation(libs.navigation.fragment.ktx) // Use a versão mais recente
+    implementation(libs.navigation.ui.ktx)
 }

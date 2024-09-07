@@ -9,10 +9,10 @@ import java.util.List;
 public interface MingleItemRepository {
 
     MingleItem getMingleItemById(int id);
-    List<MingleItem> getUserMingleItems(int userId);
-    List<MingleItem> getUserMingleItemsByType(int userId, MingleType type);
-    List<MingleItem> getUserMingleItemsByStatus(int userId, MingleStatus status);
-    List<MingleItem> getUserMingleItemsWithFriend(int userId, int friendId);
+    List<MingleItem> getUserMingleItems(String userId);
+    List<MingleItem> getUserMingleItemsByType(String userId, MingleType type);
+    List<MingleItem> getUserMingleItemsByStatus(String userId, MingleStatus status);
+    List<MingleItem> getUserMingleItemsWithFriend(String userId, String friendId);
     void saveMingleItem(MingleItem mingleItem);
     void deleteMingleItem(int id);
     void updateMingleItem(MingleItem mingleItem);

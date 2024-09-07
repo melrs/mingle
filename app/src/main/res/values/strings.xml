@@ -72,8 +72,8 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="hello">Hello 👋🏻</string>
-    <string name="jane_doe">Jane Doe</string>
+    <string name="hello">hello 👋🏻</string>
+    <string name="jane_doe">jane doe</string>
     <string name="rs">BRL</string>
     <string name="_100">100</string>
     <string name="balance">balance:</string>
@@ -85,4 +85,36 @@
     <string name="title_activity_create_account">CreateAccountActivity</string>
     <string name="confirm_password">confirm password</string>
     <string name="username">username</string>
+    <string name="change_profile_picture">chnge profile picture</string>
+    <string name="edit_name">edit name</string>
+    <string name="date_of_birth">date_of_birth</string>
+    <string name="pronouns">pronouns</string>
+    <string name="zip_code">zip code</string>
+    <string name="currency">currency</string>
+    <string name="notifications">notifications</string>
+    <string name="settings">settings</string>
+    <string name="save">save</string>
+    <string name="me">me</string>
+    <string name="note">note</string>
+    <string name="home">home</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="_01_01_2020">01/01/2020</string>
+    <string name="mingler_since">mingler since</string>
+    <string name="_01_01_1990">01/01/1990</string>
+    <string name="birthday">birthday</string>
+    <string name="jane_doe_example_com">jane.doe@example.com</string>
+    <string name="email">email</string>
+    <string name="user_name">user name</string>
+    <string name="she_her">she/her</string>
+    <!-- TODO Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_email">change email</string>
+    <string name="display_name">display name</string>
+    <string name="edit">edit</string>
+    <string name="this_is">this is</string>
+    <string name="new_mingle_item">new mingle item</string>
+    <string name="friends_email">friends email</string>
+    <string name="amount">amount</string>
+    <string name="description">description</string>
+    <string name="type">type</string>
 </resources>

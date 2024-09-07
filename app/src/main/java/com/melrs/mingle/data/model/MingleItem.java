@@ -1,11 +1,14 @@
 package com.melrs.mingle.data.model;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.money.Monetary;
 import javax.money.MonetaryAmount;
@@ -13,20 +16,20 @@ import javax.money.MonetaryAmount;
 public class MingleItem {
 
     private final int id;
-    private final int userId;
-    private final int friendId;
+    private final String userId;
+    private final String friendId;
     private final MonetaryAmount amount;
-    private final LocalDateTime created_at;
+    private final @Nullable LocalDateTime created_at;
     private final String description;
     private final MingleType type;
     private final MingleStatus status;
-    private final LocalDateTime updated_at;
+    private final @Nullable LocalDateTime updated_at;
 
 
     public MingleItem(
             int id,
-            int userId, 
-            int friendId, 
+            String userId,
+            String friendId,
             MonetaryAmount amount,
             LocalDateTime created_at, 
             String description, 
@@ -45,12 +48,13 @@ public class MingleItem {
         this.amount = amount;
     }
     
+    @SuppressLint("WeekBasedYear")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static MingleItem create(
             int id,
-            int userId, 
-            int friendId,
-            String balance,
+            String userId,
+            String friendId,
+            String amount,
             String currencyCode,
             String created_at,
             String description,
@@ -62,24 +66,46 @@ public class MingleItem {
                 id,
                 userId,
                 friendId,
-                Monetary.getDefaultAmountFactory().setNumber(Double.parseDouble(balance)).setCurrency(currencyCode).create(),
-                LocalDateTime.parse(created_at),
+                Monetary.getDefaultAmountFactory().setNumber(Double.parseDouble(amount)).setCurrency(currencyCode).create(),
+                LocalDateTime.parse(created_at, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                 description,
                 MingleType.valueOf(type),
                 MingleStatus.valueOf(status),
-                LocalDateTime.parse(updated_at)
+                LocalDateTime.parse(updated_at, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         );
     }
-    
+
+    public static MingleItem newItem(
+            String userId,
+            String friendId,
+            String amount,
+            String currencyCode,
+            String description,
+            String type,
+            String status
+    ) {
+        return new MingleItem(
+                0,
+                userId,
+                friendId,
+                Monetary.getDefaultAmountFactory().setNumber(Double.parseDouble(amount)).setCurrency(currencyCode).create(),
+                null,
+                description,
+                MingleType.valueOf(type),
+                MingleStatus.valueOf(status),
+                null
+        );
+    }
+
     public int getId() {
         return id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
     
-    public int getFriendId() {
+    public String getFriendId() {
         return friendId;
     }
     
