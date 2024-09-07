@@ -4,6 +4,7 @@ import com.melrs.mingle.data.model.UserBalance;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class UserBalanceInMemoryRepository implements UserBalanceRepository {
 
@@ -14,9 +15,9 @@ public class UserBalanceInMemoryRepository implements UserBalanceRepository {
     }
 
     @Override
-    public UserBalance getUserBalanceByUserId(int id) {
+    public UserBalance getUserBalanceByUserId(String id) {
         return this.balances.stream()
-            .filter(balance -> balance.getUserId() == id)
+            .filter(balance -> Objects.equals(balance.getUserId(), id))
             .findFirst()
             .orElse(null);
     }
@@ -27,15 +28,15 @@ public class UserBalanceInMemoryRepository implements UserBalanceRepository {
     }
 
     @Override
-    public void deleteUserBalance(int id) {
-        this.balances.removeIf(balance -> balance.getUserId() == id);
+    public void deleteUserBalance(String id) {
+        this.balances.removeIf(balance -> Objects.equals(balance.getUserId(), id));
     }
 
     @Override
     public void updateUserBalance(UserBalance userBalance) {
         this.balances
             .stream()
-            .filter(balance -> balance.getUserId() == userBalance.getUserId())
+            .filter(balance -> Objects.equals(balance.getUserId(), userBalance.getUserId()))
             .findFirst()
             .ifPresent(mingleActivity1 -> mingleActivity1 = userBalance);
     }

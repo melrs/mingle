@@ -4,10 +4,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.ui.feed.FeedFragment;
+import com.melrs.mingle.ui.mingleitem.AddManualMingleItemFragment;
 import com.melrs.mingle.ui.profile.ProfileFragment;
 
 
@@ -17,8 +20,10 @@ public class HomeActivity extends AppCompatActivity {
     private final UserBalance userBalance;
 
     public HomeActivity() {
-        this.user = new MingleUser("1", "m Doe");
-        this.userBalance = UserBalance.create(1, "100.86", "USD");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        this.user = new MingleUser(user.getUid(), user.getEmail());
+        this.userBalance = UserBalance.create(user.getUid(), "100.86", "USD");
     }
 
     @Override
@@ -52,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             if (id == R.id.nav_camera) {
-                selectedFragment = new ProfileFragment(getSupportFragmentManager());
+                selectedFragment = new AddManualMingleItemFragment();
             }
 
             if (selectedFragment != null) {

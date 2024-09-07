@@ -5,19 +5,19 @@ import javax.money.MonetaryAmount;
 
 public class UserBalance {
 
-    private final int userId;
+    private final String userId;
     private final MonetaryAmount balance;
 
-    private UserBalance(int userId, String balance, String currencyCode) {
+    private UserBalance(String userId, String balance, String currencyCode) {
         this.userId = userId;
         this.balance = Monetary.getDefaultAmountFactory().setNumber(Double.parseDouble(balance)).setCurrency(currencyCode).create();
     }
 
-    public static UserBalance create(int userId, String balance, String currencyCode) {
+    public static UserBalance create(String userId, String balance, String currencyCode) {
         return new UserBalance(userId, balance, currencyCode);
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 

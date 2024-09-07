@@ -23,8 +23,6 @@ import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.repositories.user.UserRepository;
 import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 
-import java.util.Objects;
-
 public class ProfileFragment extends Fragment {
 
     FragmentManager fragmentManager;

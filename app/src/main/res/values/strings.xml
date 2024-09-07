@@ -106,10 +106,15 @@
     <string name="email">email</string>
     <string name="user_name">user name</string>
     <string name="she_her">she/her</string>
-<!-- TODO Remove or change this placeholder text -->
+    <!-- TODO Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change_email">change email</string>
     <string name="display_name">display name</string>
     <string name="edit">edit</string>
     <string name="this_is">this is</string>
+    <string name="new_mingle_item">new mingle item</string>
+    <string name="friends_email">friends email</string>
+    <string name="amount">amount</string>
+    <string name="description">description</string>
+    <string name="type">type</string>
 </resources>

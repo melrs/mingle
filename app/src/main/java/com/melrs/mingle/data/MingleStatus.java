@@ -1,6 +1,7 @@
 package com.melrs.mingle.data;
 
 public enum MingleStatus {
+    OP("OP", "Open"),
     PE("PE", "Pending"),
     PA("PA", "Paid"),
     CA("CA", "Cancelled"),
@@ -20,6 +21,16 @@ public enum MingleStatus {
 
     public String getDescription() {
         return description;
+    }
+
+    public static String[] cases() {
+        MingleStatus[] statuses = MingleStatus.values();
+        String[] values = new String[statuses.length];
+        for (int i = 0; i < statuses.length; i++) {
+            values[i] = statuses[i].getCode();
+        }
+
+        return values;
     }
 
 }

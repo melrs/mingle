@@ -25,7 +25,6 @@ import java.util.Objects;
 
 public class EditProfileFragment extends Fragment {
 
-    private EditProfileViewModel mViewModel;
     FragmentManager fragmentManager;
     MingleUser user;
     TextView username;

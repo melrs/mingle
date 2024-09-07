@@ -8,7 +8,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.utils.FirestoreCollection;
+import com.melrs.mingle.util.FirestoreCollection;
 
 public class FirebaseUserRepository implements UserRepository {
 

@@ -1,4 +1,4 @@
-package com.melrs.mingle.utils;
+package com.melrs.mingle.util;
 
 import android.content.Context;
 import android.content.Intent;

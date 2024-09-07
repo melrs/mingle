@@ -4,9 +4,9 @@ import com.melrs.mingle.data.model.UserBalance;
 
 public interface UserBalanceRepository {
 
-    UserBalance getUserBalanceByUserId(int id);
+    UserBalance getUserBalanceByUserId(String id);
     void saveUserBalance(UserBalance userBalance);
-    void deleteUserBalance(int id);
+    void deleteUserBalance(String id);
     void updateUserBalance(UserBalance userBalance);
 
 }

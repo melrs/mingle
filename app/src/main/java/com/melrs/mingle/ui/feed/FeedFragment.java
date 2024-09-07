@@ -31,11 +31,9 @@ public class FeedFragment extends Fragment {
         this.userBalance = userBalance;
     }
 
-    public static FeedFragment newInstance(MingleUser user, UserBalance userBalance) {
-        FeedFragment fragment = new FeedFragment(user, userBalance);
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public FeedFragment() {
+        this.user = MingleUser.empty();
+        this.userBalance = UserBalance.create("1", "100.86", "USD");
     }
 
     @Override
@@ -81,7 +79,7 @@ public class FeedFragment extends Fragment {
         }
 
         MingleRecyclerViewAdapter adapter = new MingleRecyclerViewAdapter(
-                MingleItemRepositoryResolver.resolve().getUserMingleItems(this.user.getUserId())
+                MingleItemRepositoryResolver.resolve(getContext()).getUserMingleItems(this.user.getUserId())
         );
         recyclerView.setAdapter(adapter);
     }
@@ -94,11 +92,11 @@ public class FeedFragment extends Fragment {
                 "2",
                 "25.00",
                 "BRL",
-                "2021-09-01T00:00:00",
+                "2021-09-01 00:00:00",
                 "Just a mingle",
                 "MI",
                 "PA",
-                "2021-09-01T08:00:00"
+                "2021-09-01 08:00:00"
         );
         MingleItem item2 = MingleItem.create(
                 2,
@@ -106,19 +104,19 @@ public class FeedFragment extends Fragment {
                 "2",
                 "25.00",
                 "BRL",
-                "2021-09-01T00:00:00",
+                "2021-09-01 00:00:00",
                 "Other a mingle",
                 "MO",
                 "CA",
-                "2021-09-01T08:00:00"
+                "2021-09-01 08:00:00"
         );
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
-        MingleItemRepositoryResolver.resolve().saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item2);
+        MingleItemRepositoryResolver.resolve(getContext()).saveMingleItem(item2);
     }
 }
