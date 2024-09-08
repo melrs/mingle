@@ -123,4 +123,5 @@
     <string name="choose_image_source">choose image source</string>
     <string name="gallery">gallery</string>
     <string name="camera_">camera</string>
+    <string name="logout">logout</string>
 </resources>

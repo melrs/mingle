@@ -33,7 +33,7 @@ public class EditProfileFragment extends Fragment {
     TextInputEditText emailEditText;
     TextInputEditText birthDateEditText;
     TextInputEditText pronounsEditText;
-    Button editProfileButton;
+    Button saveButton;
 
     public EditProfileFragment(FragmentManager fragmentManager, MingleUser user) {
         super();
@@ -59,7 +59,7 @@ public class EditProfileFragment extends Fragment {
         emailEditText = view.findViewById(R.id.emailAddress);
         birthDateEditText = view.findViewById(R.id.birthday);
         pronounsEditText = view.findViewById(R.id.pronouns);
-        editProfileButton = view.findViewById(R.id.saveButton);
+        saveButton = view.findViewById(R.id.saveButton);
         username = view.findViewById(R.id.userNameView);
 
         nameEditText.setText(user.getDisplayName());
@@ -71,7 +71,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setupSaveButtonListener() {
-        editProfileButton.setOnClickListener(v -> saveProfile());
+        saveButton.setOnClickListener(v -> saveProfile());
     }
 
     private void saveProfile() {

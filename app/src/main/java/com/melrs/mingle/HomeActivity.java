@@ -2,7 +2,6 @@ package com.melrs.mingle;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,7 +21,6 @@ import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.ui.feed.FeedFragment;
-import com.melrs.mingle.ui.mingleitem.AddMingleItemActivity;
 import com.melrs.mingle.ui.mingleitem.invoice.InvoiceProcessor;
 import com.melrs.mingle.ui.profile.ProfileFragment;
 import com.melrs.mingle.ui.mingleitem.invoice.PermissionManager;
