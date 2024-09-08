@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-<<<<<<< HEAD
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,32 +20,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
-=======
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.melrs.mingle.R;
-import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.utils.FirestoreCollection;
->>>>>>> 182f0d2 (User Profile)
 
 import java.util.Objects;
 
 public class EditProfileFragment extends Fragment {
 
-<<<<<<< HEAD
     FragmentManager fragmentManager;
     MingleUser user;
     TextView username;
-=======
-    private EditProfileViewModel mViewModel;
-    FragmentManager fragmentManager;
-    MingleUser profile;
->>>>>>> 182f0d2 (User Profile)
     TextInputEditText nameEditText;
     TextInputEditText usernameEditText;
     TextInputEditText emailEditText;
@@ -57,11 +38,7 @@ public class EditProfileFragment extends Fragment {
     public EditProfileFragment(FragmentManager fragmentManager, MingleUser user) {
         super();
         this.fragmentManager = fragmentManager;
-<<<<<<< HEAD
         this.user = user;
-=======
-        this.profile = user;
->>>>>>> 182f0d2 (User Profile)
     }
 
     public static EditProfileFragment newInstance(FragmentManager fragmentManager, MingleUser user) {
@@ -74,7 +51,6 @@ public class EditProfileFragment extends Fragment {
         bindUIComponents(view);
         setupSaveButtonListener();
         return view;
-<<<<<<< HEAD
     }
 
     private void bindUIComponents(View view) {
@@ -95,9 +71,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setupSaveButtonListener() {
-        editProfileButton.setOnClickListener(v -> {
-            saveProfile();
-        });
+        editProfileButton.setOnClickListener(v -> saveProfile());
     }
 
     private void saveProfile() {
@@ -124,58 +98,5 @@ public class EditProfileFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_container,  ProfileFragment.newInstance(fragmentManager));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-=======
->>>>>>> 182f0d2 (User Profile)
     }
-
-    private void bindUIComponents(View view) {
-        nameEditText = view.findViewById(R.id.nameEdit);
-        usernameEditText = view.findViewById(R.id.usernameEdit);
-        emailEditText = view.findViewById(R.id.emailEdit);
-        birthDateEditText = view.findViewById(R.id.birthdayEdit);
-        pronounsEditText = view.findViewById(R.id.pronounsEdit);
-        editProfileButton = view.findViewById(R.id.saveButton);
-        nameEditText.setText(profile.getDisplayName());
-        usernameEditText.setText(profile.getUsername());
-        emailEditText.setText(profile.getEmail());
-        birthDateEditText.setText(profile.getBirthDate());
-        pronounsEditText.setText(profile.getPronouns());
-    }
-
-    private void setupSaveButtonListener() {
-        editProfileButton.setOnClickListener(v -> {
-            saveProfile();
-
-        });
-    }
-
-    private void saveProfile() {
-        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(FirestoreCollection.USER.getName()).document(userId)
-                .update(
-                        "displayName", Objects.requireNonNull(nameEditText.getText()).toString(),
-                        "username", Objects.requireNonNull(usernameEditText.getText()).toString(),
-                        "email", Objects.requireNonNull(emailEditText.getText()).toString(),
-                        "birthDate", Objects.requireNonNull(birthDateEditText.getText()).toString(),
-                        "pronouns", Objects.requireNonNull(pronounsEditText.getText()).toString(),
-                        "balance", Objects.requireNonNull(profile.getBalance()),
-                        "minglerSince", Objects.requireNonNull(profile.getMinglerSince())
-                )
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        String message = "Profile updated successfully";
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String message = "Failed to update profile";
-                        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
 }

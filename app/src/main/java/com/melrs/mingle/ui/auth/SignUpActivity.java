@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,22 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.firebase.auth.FirebaseAuth;
-<<<<<<< HEAD
 import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
-=======
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.melrs.mingle.HomeActivity;
-import com.melrs.mingle.R;
-import com.melrs.mingle.data.model.MingleUser;
->>>>>>> 182f0d2 (User Profile)
 import com.melrs.mingle.databinding.ActivitySignUpBinding;
-import com.melrs.mingle.utils.FirestoreCollection;
-
-import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -127,25 +115,6 @@ public class SignUpActivity extends AppCompatActivity {
                 emailEditText.getText().toString(),
                 passwordEditText.getText().toString()
         );
-        saveUserInfo();
-
-    }
-
-    private void saveUserInfo() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        MingleUser user = MingleUser.empty();
-        user.setUsername(usernameEditText.getText().toString());
-        user.setEmail(emailEditText.getText().toString());
-        user.setDisplayName(usernameEditText.getText().toString());
-        assert user.getEmail() != null;
-        db.collection(FirestoreCollection.USER.getName())
-                .document(user.getEmail())
-                .set(user)
-                .addOnCompleteListener(task -> {
-                    Toast.makeText(getApplicationContext(), "User added successfully", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(getApplicationContext(), "Failed to add user", Toast.LENGTH_SHORT).show();
-                });
     }
 
     private void saveUserInfo(AuthenticatedUserView model) {

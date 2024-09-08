@@ -106,7 +106,6 @@
     <string name="email">email</string>
     <string name="user_name">user name</string>
     <string name="she_her">she/her</string>
-<<<<<<< HEAD
     <!-- TODO Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="change_email">change email</string>
@@ -118,9 +117,7 @@
     <string name="amount">amount</string>
     <string name="description">description</string>
     <string name="type">type</string>
-=======
-<!-- TODO Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="change_email">change email</string>
->>>>>>> 182f0d2 (User Profile)
+    <string name="create_a_new_mingle">create a new mingle</string>
+    <string name="take_photo">take photo</string>
+    <string name="upload_photo">upload photo</string>
 </resources>
