@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.melrs.mingle.HomeActivity;
 import com.melrs.mingle.R;
 import com.melrs.mingle.data.model.MingleUser;
