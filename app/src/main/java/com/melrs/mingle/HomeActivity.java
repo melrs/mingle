@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setUpFragment(new FeedFragment(this.user, this.userBalance));
+        setUpFragment(new FeedFragment(this.user, this.userBalance, getSupportFragmentManager()));
         setUpNavMenu();
     }
 
@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
 
             if (id == R.id.nav_home) {
-                selectedFragment = new FeedFragment(this.user, this.userBalance);
+                selectedFragment = new FeedFragment(this.user, this.userBalance, getSupportFragmentManager());
             }
 
             if (id == R.id.nav_profile) {
