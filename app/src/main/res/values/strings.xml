@@ -117,4 +117,5 @@
     <string name="amount">amount</string>
     <string name="description">description</string>
     <string name="type">type</string>
+    <string name="create_a_new_mingle">create a new mingle</string>
 </resources>
