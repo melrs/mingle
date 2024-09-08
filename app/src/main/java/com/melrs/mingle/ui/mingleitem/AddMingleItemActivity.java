@@ -8,12 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.melrs.mingle.R;
 import com.melrs.mingle.ui.mingleitem.invoice.InvoiceProcessor;
+import com.melrs.mingle.ui.mingleitem.invoice.PermissionManager;
 
 import java.util.List;
 
@@ -159,32 +160,28 @@ public class AddMingleItemActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Pair<Runnable, String> result = getResult(requestCode);
+
+        if (PermissionManager.hasPermissionToProcessImage(grantResults)){
+            result.first.run();
+            return;
+        }
+
+        Toast.makeText(this, result.second, Toast.LENGTH_SHORT).show();
+    }
+
+    private Pair<Runnable, String> getResult(int requestCode) {
         switch (requestCode) {
-            case REQUEST_IMAGE_CAPTURE:
-                handleCameraPermission(grantResults);
-                break;
-            case REQUEST_IMAGE_PICK:
-                handleStoragePermission(grantResults);
-                break;
+            case PermissionManager.REQUEST_IMAGE_CAPTURE:
+                return new Pair<>(this::setupGalleryLauncher, "Storage permission is required to upload a photo");
+            case PermissionManager.REQUEST_IMAGE_PICK:
+                return new Pair<>(this::setupCameraLauncher, "Camera permission is required to take a photo");
+            default:
+                throw new IllegalArgumentException("Invalid request code");
         }
     }
 
-    private void handleStoragePermission(int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupGalleryLauncher();
-        } else {
-            Toast.makeText(this, "Storage permission is required to upload a photo", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void handleCameraPermission(int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupCameraLauncher();
-        } else {
-            Toast.makeText(this, "Camera permission is required to take a photo", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }

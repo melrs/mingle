@@ -120,4 +120,7 @@
     <string name="create_a_new_mingle">create a new mingle</string>
     <string name="take_photo">take photo</string>
     <string name="upload_photo">upload photo</string>
+    <string name="choose_image_source">choose image source</string>
+    <string name="gallery">gallery</string>
+    <string name="camera_">camera</string>
 </resources>

@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:icon="@drawable/ic_camera"
+            app:icon="@drawable/ic_invoice"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
