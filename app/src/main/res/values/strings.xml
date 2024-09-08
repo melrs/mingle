@@ -117,4 +117,7 @@
     <string name="amount">amount</string>
     <string name="description">description</string>
     <string name="type">type</string>
+    <string name="create_a_new_mingle">create a new mingle</string>
+    <string name="take_photo">take photo</string>
+    <string name="upload_photo">upload photo</string>
 </resources>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,15 +22,22 @@ import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.data.repositories.mingleItem.MingleItemRepositoryResolver;
 import com.melrs.mingle.list.MingleRecyclerViewAdapter;
+import com.melrs.mingle.ui.mingleitem.AddManualMingleItemFragment;
 
 public class FeedFragment extends Fragment {
 
+    FragmentManager fragmentManager;
     private final MingleUser user;
     private final UserBalance userBalance;
 
-    public FeedFragment(MingleUser user, UserBalance userBalance) {
+    public FeedFragment(
+            MingleUser user,
+            UserBalance userBalance,
+            FragmentManager fragmentManager
+    ) {
         this.user = user;
         this.userBalance = userBalance;
+        this.fragmentManager = fragmentManager;
     }
 
     public FeedFragment() {
@@ -46,7 +55,17 @@ public class FeedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
         setUpHeader(view);
         setUpMingleList(view);
+        setUpButton(view);
         return view;
+    }
+
+    private void setUpButton(View view) {
+        view.findViewById(R.id.newMingleButton).setOnClickListener(v -> {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,  new AddManualMingleItemFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        });
     }
 
     private void setUpHeader(View view) {

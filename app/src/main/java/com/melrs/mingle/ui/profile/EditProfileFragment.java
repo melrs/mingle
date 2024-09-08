@@ -71,9 +71,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setupSaveButtonListener() {
-        editProfileButton.setOnClickListener(v -> {
-            saveProfile();
-        });
+        editProfileButton.setOnClickListener(v -> saveProfile());
     }
 
     private void saveProfile() {

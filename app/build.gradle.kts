@@ -60,6 +60,9 @@ dependencies {
     implementation(libs.legacy.support.v4)
     implementation(libs.preference)
     implementation(libs.firebase.firestore)
+    implementation(libs.vision.common)
+    implementation(libs.play.services.mlkit.text.recognition.common)
+    implementation(libs.play.services.mlkit.text.recognition)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -68,6 +71,6 @@ dependencies {
     implementation(libs.moneta)
     implementation(platform(libs.firebase.bom))
     implementation(libs.google.firebase.analytics)
-    implementation(libs.navigation.fragment.ktx) // Use a versão mais recente
+    implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
 }
