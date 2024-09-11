@@ -23,17 +23,12 @@ public class UserBalanceInMemoryRepository implements UserBalanceRepository {
     }
 
     @Override
-    public void saveUserBalance(UserBalance userBalance) {
-        this.balances.add(userBalance);
-    }
-
-    @Override
     public void deleteUserBalance(String id) {
         this.balances.removeIf(balance -> Objects.equals(balance.getUserId(), id));
     }
 
     @Override
-    public void updateUserBalance(UserBalance userBalance) {
+    public void upsertUserBalance(UserBalance userBalance) {
         this.balances
             .stream()
             .filter(balance -> Objects.equals(balance.getUserId(), userBalance.getUserId()))

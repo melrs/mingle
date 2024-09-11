@@ -1,9 +1,12 @@
 package com.melrs.mingle.data.repositories.userBalance;
 
-public class UserBalanceRepositoryResolver {
+import android.content.Context;
 
-    public static UserBalanceRepository resolve() {
-        return new UserBalanceInMemoryRepository();
+public class UserBalanceRepositoryResolver {
+    private static UserBalanceRepository repository;
+
+    public static UserBalanceRepository resolve(Context context) {
+        return repository == null ? repository = new UserBalanceDatabaseRepository(context) : repository;
     }
 
 }

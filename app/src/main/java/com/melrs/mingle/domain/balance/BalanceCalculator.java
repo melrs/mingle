@@ -7,6 +7,7 @@ import com.melrs.mingle.data.model.MingleItem;
 import com.melrs.mingle.data.model.MingleUser;
 import com.melrs.mingle.data.model.UserBalance;
 import com.melrs.mingle.data.repositories.mingleItem.MingleItemRepository;
+import com.melrs.mingle.data.repositories.userBalance.UserBalanceRepository;
 import com.melrs.mingle.data.repositories.userBalance.UserBalanceRepositoryResolver;
 import com.melrs.mingle.domain.balance.events.BalanceEvent;
 import com.melrs.mingle.domain.balance.events.EventType;
@@ -23,14 +24,20 @@ public class BalanceCalculator {
 
     private final MingleUser mingleUser;
     private final MingleItemRepository mingleItemRepository;
+    private final UserBalanceRepository userBalanceRepository;
 
-    public BalanceCalculator(MingleUser mingleUser, MingleItemRepository mingleItemRepository) {
+    public BalanceCalculator(MingleUser mingleUser, MingleItemRepository mingleItemRepository, UserBalanceRepository userBalanceRepository) {
         this.mingleUser = mingleUser;
         this.mingleItemRepository = mingleItemRepository;
+        this.userBalanceRepository = userBalanceRepository;
     }
 
-    public static BalanceCalculator create(MingleUser mingleUser, MingleItemRepository mingleItemRepository) {
-        return new BalanceCalculator(mingleUser, mingleItemRepository);
+    public static BalanceCalculator create(
+            MingleUser mingleUser,
+            MingleItemRepository mingleItemRepository,
+            UserBalanceRepository userBalanceRepository
+    ) {
+        return new BalanceCalculator(mingleUser, mingleItemRepository, userBalanceRepository);
     }
 
     public void register() {
@@ -44,7 +51,7 @@ public class BalanceCalculator {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onMingleItemEvent(MingleItemEvent event) {
         UserBalance userBalance = calculateUserBalance();
-        UserBalanceRepositoryResolver.resolve().updateUserBalance(userBalance);
+        userBalanceRepository.upsertUserBalance(userBalance);
         EventBus.getDefault().post(BalanceEvent.create(userBalance, EventType.CREATE));
         Log.d("EventBus", Thread.currentThread().getName());
         Log.d("EventBus", "Balance updated");

@@ -22,17 +22,6 @@ public class UserBalanceDatabaseRepository implements UserBalanceRepository {
     }
 
     @Override
-    public void saveUserBalance(UserBalance userBalance) {
-        try (SQLiteDatabase db = dbHelper.getWritableDatabase()) {
-            db.insert(
-                    DatabaseHelper.TABLE_USER_BALANCE,
-                    null,
-                    UserBalanceContentValues.from(userBalance)
-            );
-        }
-    }
-
-    @Override
     public void deleteUserBalance(String id) {
         try (SQLiteDatabase db = dbHelper.getWritableDatabase()) {
             db.delete(
@@ -43,17 +32,15 @@ public class UserBalanceDatabaseRepository implements UserBalanceRepository {
         } catch (Exception ignored) {
 
         }
-
     }
 
     @Override
-    public void updateUserBalance(UserBalance userBalance) {
+    public void upsertUserBalance(UserBalance userBalance) {
         try (SQLiteDatabase db = dbHelper.getWritableDatabase()) {
-            db.update(
+            db.replace(
                     DatabaseHelper.TABLE_USER_BALANCE,
-                    UserBalanceContentValues.from(userBalance),
-                    "userId = ?",
-                    new String[]{userBalance.getUserId()}
+                    null,
+                    UserBalanceContentValues.from(userBalance)
             );
         }
     }
@@ -77,7 +64,8 @@ public class UserBalanceDatabaseRepository implements UserBalanceRepository {
     }
 
     private UserBalance cursorToUserBalance(Cursor cursor) {
-        int userIdIndex = cursor.getColumnIndexOrThrow("userId");int balanceIndex = cursor.getColumnIndexOrThrow("balance");
+        int userIdIndex = cursor.getColumnIndexOrThrow("userId");
+        int balanceIndex = cursor.getColumnIndexOrThrow("balance");
         int currencyCodeIndex = cursor.getColumnIndexOrThrow("currencyCode");
 
         return UserBalance.create(

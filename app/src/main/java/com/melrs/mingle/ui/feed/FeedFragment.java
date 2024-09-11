@@ -59,7 +59,11 @@ public class FeedFragment extends Fragment {
             mingleUser = (MingleUser) getArguments().getSerializable(ARG_USER);
         }
         EventBus.getDefault().register(this);
-        balanceCalculator = BalanceCalculator.create(this.mingleUser, MingleItemRepositoryResolver.resolve(getContext()));
+        balanceCalculator = BalanceCalculator.create(
+                this.mingleUser,
+                MingleItemRepositoryResolver.resolve(getContext()),
+                UserBalanceRepositoryResolver.resolve(getContext())
+        );
         balanceCalculator.register();
     }
 
@@ -114,7 +118,7 @@ public class FeedFragment extends Fragment {
     private void setUpHeader() {
         text_username.setText(this.mingleUser.getDisplayName());
         user_profile_image.setImageResource(R.drawable.ic_user_icon); // TODO: set user profile image
-        updateBalanceUI(UserBalanceRepositoryResolver.resolve().getUserBalanceByUserId(this.mingleUser.getUserId()));
+        updateBalanceUI(UserBalanceRepositoryResolver.resolve(getContext()).getUserBalanceByUserId(this.mingleUser.getUserId()));
     }
 
     private void updateBalanceUI(UserBalance userBalance) {

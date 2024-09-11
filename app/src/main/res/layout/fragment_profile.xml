@@ -156,15 +156,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp" />
 
-            <Button
-                android:id="@+id/editProfileButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:text="@string/edit_profile"
-                android:drawableStart="@drawable/ic_edit_pen"
-                android:drawablePadding="8dp"/>
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/editProfileButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/edit_profile"
+                    android:drawableStart="@drawable/ic_edit_pen"
+                    android:drawablePadding="8dp"/>
+
+                <Button
+                    android:id="@+id/logoutButton"
+                    style="@style/MingleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/logout"
+                    android:textColor="@color/error"
+                    android:drawablePadding="8dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

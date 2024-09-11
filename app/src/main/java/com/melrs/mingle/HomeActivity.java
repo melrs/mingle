@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
@@ -17,12 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.ui.feed.FeedFragment;
 import com.melrs.mingle.ui.mingleitem.invoice.InvoiceProcessor;
@@ -30,8 +26,7 @@ import com.melrs.mingle.ui.profile.ProfileFragment;
 import com.melrs.mingle.ui.mingleitem.invoice.PermissionManager;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -97,7 +92,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void fetchUserData() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        this.user = MingleUser.createNew(user.getUid(), user.getEmail(), user.getEmail());
+        String username = Objects.requireNonNull(user.getEmail()).split("@")[0];
+        this.user = MingleUser.createNew(user.getUid(), username, user.getEmail());
         setUpFragment(FeedFragment.newInstance(this.user));
         setUpNavMenu();
     }
