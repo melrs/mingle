@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+eventbus = "3.3.1"
 firebaseBom = "33.2.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -29,6 +30,7 @@ playServicesMlkitTextRecognitionCommon = "19.1.0"
 playServicesMlkitTextRecognition = "19.0.1"
 
 [libraries]
+eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }

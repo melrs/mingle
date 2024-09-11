@@ -22,7 +22,6 @@ public class InvoiceModalFragment extends DialogFragment {
     LinearLayout galleryLayout;
     PermissionManager permissionManager;
 
-    //construct
     public InvoiceModalFragment(Activity activity) {
         permissionManager = new PermissionManager(activity);
     }

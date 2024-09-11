@@ -15,7 +15,7 @@ import javax.money.MonetaryAmount;
 
 public class MingleItem {
 
-    private final int id;
+    public final int id;
     private final String userId;
     private final String friendId;
     private final MonetaryAmount amount;

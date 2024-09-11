@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -11,7 +12,11 @@ import com.melrs.mingle.data.MingleStatus;
 import com.melrs.mingle.data.MingleType;
 import com.melrs.mingle.data.database.DatabaseHelper;
 import com.melrs.mingle.data.model.MingleItem;
+import com.melrs.mingle.domain.balance.events.EventType;
+import com.melrs.mingle.domain.balance.events.MingleItemEvent;
 import com.melrs.mingle.util.MingleContentValues;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,13 +168,18 @@ public class MingleItemDatabaseRepository implements MingleItemRepository {
                 MingleContentValues.from(mingleItem)
         );
         db.close();
+        EventBus.getDefault().post(MingleItemEvent.create(mingleItem.getId(), EventType.CREATE));
+        Log.d("EventBus", Thread.currentThread().getName());
+        Log.d("EventBus", "MingleItem created: " + mingleItem.getId());
     }
 
     @Override
     public void deleteMingleItem(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(DatabaseHelper.TABLE_MINGLE_ITEMS, "id = ?", new String[]{String.valueOf(id)});
-        db.close();    }
+        db.close();
+        EventBus.getDefault().post(MingleItemEvent.create(id, EventType.DELETE));
+    }
 
     @Override
     public void updateMingleItem(MingleItem mingleItem) {
@@ -181,6 +191,8 @@ public class MingleItemDatabaseRepository implements MingleItemRepository {
                 new String[]{String.valueOf(mingleItem.getId())}
         );
         db.close();
+        EventBus.getDefault().post(MingleItemEvent.create(mingleItem.getId(), EventType.UPDATE));
+        Log.d("MingleItemDatabaseRepository", "MingleItem updated: " + mingleItem.getId());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

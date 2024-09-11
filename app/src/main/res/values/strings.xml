@@ -75,7 +75,7 @@
     <string name="hello">hello 👋🏻</string>
     <string name="jane_doe">jane doe</string>
     <string name="rs">BRL</string>
-    <string name="_100">100</string>
+    <string name="_100">0</string>
     <string name="balance">balance:</string>
     <string name="_00">,00</string>
     <string name="friends_name">friends name</string>

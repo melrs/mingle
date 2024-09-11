@@ -2,9 +2,10 @@ package com.melrs.mingle.data.model;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class MingleUser {
+public class MingleUser implements Serializable {
 
     public @Nullable String userId;
     public @Nullable String displayName;
