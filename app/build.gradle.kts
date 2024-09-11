@@ -73,4 +73,5 @@ dependencies {
     implementation(libs.google.firebase.analytics)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation (libs.eventbus)
 }

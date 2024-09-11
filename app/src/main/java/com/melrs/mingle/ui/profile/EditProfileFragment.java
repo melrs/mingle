@@ -1,7 +1,5 @@
 package com.melrs.mingle.ui.profile;
 
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +23,7 @@ import java.util.Objects;
 
 public class EditProfileFragment extends Fragment {
 
-    FragmentManager fragmentManager;
+    private static final String ARG_USER = "user";
     MingleUser user;
     TextView username;
     TextInputEditText nameEditText;
@@ -33,16 +31,22 @@ public class EditProfileFragment extends Fragment {
     TextInputEditText emailEditText;
     TextInputEditText birthDateEditText;
     TextInputEditText pronounsEditText;
-    Button saveButton;
+    Button editProfileButton;
 
-    public EditProfileFragment(FragmentManager fragmentManager, MingleUser user) {
-        super();
-        this.fragmentManager = fragmentManager;
-        this.user = user;
+    public static EditProfileFragment newInstance(MingleUser user) {
+        EditProfileFragment fragment = new EditProfileFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_USER, user);
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    public static EditProfileFragment newInstance(FragmentManager fragmentManager, MingleUser user) {
-        return new EditProfileFragment(fragmentManager, user);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            user = (MingleUser) getArguments().getSerializable(ARG_USER);
+        }
     }
 
     @Override
@@ -59,7 +63,7 @@ public class EditProfileFragment extends Fragment {
         emailEditText = view.findViewById(R.id.emailAddress);
         birthDateEditText = view.findViewById(R.id.birthday);
         pronounsEditText = view.findViewById(R.id.pronouns);
-        saveButton = view.findViewById(R.id.saveButton);
+        editProfileButton = view.findViewById(R.id.saveButton);
         username = view.findViewById(R.id.userNameView);
 
         nameEditText.setText(user.getDisplayName());
@@ -71,7 +75,9 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setupSaveButtonListener() {
-        saveButton.setOnClickListener(v -> saveProfile());
+        editProfileButton.setOnClickListener(v -> {
+            saveProfile();
+        });
     }
 
     private void saveProfile() {
@@ -94,8 +100,8 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setUpFragmentTransaction() {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container,  ProfileFragment.newInstance(fragmentManager));
+        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container,  ProfileFragment.newInstance(this.user));
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

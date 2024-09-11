@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
@@ -14,11 +16,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.melrs.mingle.data.model.MingleUser;
-import com.melrs.mingle.data.model.UserBalance;
+import com.melrs.mingle.data.repositories.user.UserRepositoryResolver;
 import com.melrs.mingle.databinding.ActivityHomeBinding;
 import com.melrs.mingle.ui.feed.FeedFragment;
 import com.melrs.mingle.ui.mingleitem.invoice.InvoiceProcessor;
@@ -26,33 +30,27 @@ import com.melrs.mingle.ui.profile.ProfileFragment;
 import com.melrs.mingle.ui.mingleitem.invoice.PermissionManager;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final MingleUser user;
-    private final UserBalance userBalance;
+    private MingleUser user;
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private static final String IMAGE_TITLE = "new_invoice";
     private static final String IMAGE_DESCRIPTION = "from_camera";
     Uri selectedImage;
 
-    public HomeActivity() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        assert user != null;
-        this.user = new MingleUser(user.getUid(), user.getEmail());
-        this.userBalance = UserBalance.create(user.getUid(), "100.86", "USD");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityHomeBinding binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setUpFragment(new FeedFragment(this.user, this.userBalance, getSupportFragmentManager()));
-        setUpNavMenu();
+        if (savedInstanceState == null) {
+            fetchUserData();
+        }
 
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
@@ -73,6 +71,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("user", user);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        user = (MingleUser) savedInstanceState.getSerializable("user");
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Pair<Runnable, String> result = getResult(requestCode);
@@ -83,6 +93,13 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this, result.second, Toast.LENGTH_SHORT).show();
+    }
+
+    private void fetchUserData() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        this.user = MingleUser.createNew(user.getUid(), user.getEmail(), user.getEmail());
+        setUpFragment(FeedFragment.newInstance(this.user));
+        setUpNavMenu();
     }
 
     private Pair<Runnable, String> getResult(int requestCode) {
@@ -140,24 +157,18 @@ public class HomeActivity extends AppCompatActivity {
         return values;
     }
 
-    private void setUpFragment(Fragment selectedFragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, selectedFragment)
-                .commit();
-    }
-
     private void setUpNavMenu() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
-                setUpFragment(new FeedFragment(this.user, this.userBalance, getSupportFragmentManager()));
+                setUpFragment(FeedFragment.newInstance(user));
                 return true;
             }
 
             if (id == R.id.nav_profile) {
-                setUpFragment(ProfileFragment.newInstance(getSupportFragmentManager()));
+                setUpFragment(ProfileFragment.newInstance(user));
                 return true;
 
             }
@@ -169,6 +180,12 @@ public class HomeActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    private void setUpFragment(Fragment selectedFragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, selectedFragment)
+                .commit();
     }
 
 }

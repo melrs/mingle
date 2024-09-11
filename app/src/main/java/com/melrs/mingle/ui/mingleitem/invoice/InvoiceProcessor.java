@@ -3,7 +3,6 @@ package com.melrs.mingle.ui.mingleitem.invoice;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
@@ -19,7 +18,6 @@ public class InvoiceProcessor {
 
     public static void processInvoice(Context context, Uri imageUri, OnInvoiceProcessedListener listener) {
         try {
-            Toast.makeText(context, "Processing... ", Toast.LENGTH_SHORT).show();
             InputImage image = InputImage.fromFilePath(context, imageUri);
             TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 

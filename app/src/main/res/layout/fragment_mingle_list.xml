@@ -10,12 +10,11 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mingle_list"
+        android:id="@+id/mingleList"
         android:name="com.melrs.mingle.list.mingleItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/mingle_item"
-        tools:context=".MingleListActivity"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
